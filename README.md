@@ -1,0 +1,2 @@
+# Tienda
+ mvc,poo,pdo
