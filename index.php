@@ -4,6 +4,7 @@ require_once('./autoload.php');
 require_once('./config/routes.php');
 require_once('./helpers/helpers.php');
 
+
 if(isset($_GET['controller'])){
     $nombre_controlador = $_GET['controller'].'Controller';
 

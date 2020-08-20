@@ -1,4 +1,10 @@
 <IfModule mod_rewrite.c>
+# muestra los errores de php
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_value error_reporting 2047
+
 # Activar rewrite
 RewriteEngine on
 
@@ -6,4 +12,8 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
 
 RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
+
+ErrorDocument 404 http://localhost:8888/Tienda/views/Error/404page.html
+ErrorDocument 500 http://localhost:8888/Tienda/views/Error/500page.html
+
 </IfModule>
