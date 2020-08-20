@@ -3,6 +3,8 @@
 //se llaman los archivos globales donde se podran utilizar en todo el proyecto
 require_once('./autoload.php');
 require_once('./config/routes.php');
+require_once('./config/conexion.php');
+require_once('./config/crudMysql.php');
 require_once('./helpers/helpers.php');
 
 //comprueba si la variables esta definida
