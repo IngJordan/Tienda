@@ -1,11 +1,15 @@
 <?php 
+//Declaraciones de rutas
 
-define("PATH_BASE", "http://localhost:8888/Tienda/");
+//url de la web
+const URL_BASE = "http://localhost:8888/Tienda/";
 
+//rutas del controlador por de fault
+const ControllerDefault = "IndexController";
+const ActionDefault = "index";
 
-//RUTAS POR DEFAULT DE LAS CARPETAS
-define("controller_default", "IndexController");
-define("action_default", "index");
-define("PATH_ASSETS",PATH_BASE."assets/");
+//ruta de assets
+const Assets = URL_BASE."assets/";
+
 
 ?>

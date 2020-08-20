@@ -13,6 +13,7 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 
 RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
 
+#se perssonalizan los errores
 ErrorDocument 404 http://localhost:8888/Tienda/views/Error/404page.html
 ErrorDocument 500 http://localhost:8888/Tienda/views/Error/500page.html
 

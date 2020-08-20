@@ -1,11 +1,11 @@
 <?php
 
-
+//clase del controlador
 class IndexController{
 
     public function index(){
   
-        // renderizar vista
+        //renderiza la vista
         require_once 'views/index.php';
     }
 
