@@ -1,4 +1,8 @@
 <IfModule mod_rewrite.c>
+
+#bloquea el axceso a las carpetas internas
+Options All -Indexes
+
 # muestra los errores de php
 php_flag display_startup_errors on
 php_flag display_errors on
@@ -11,9 +15,11 @@ RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
 
+#re escribe la regla medinte la url
 RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
 
 #se perssonalizan los errores
+ErrorDocument 403 http://localhost:8888/Tienda/views/Error/403page.html
 ErrorDocument 404 http://localhost:8888/Tienda/views/Error/404page.html
 ErrorDocument 500 http://localhost:8888/Tienda/views/Error/500page.html
 
