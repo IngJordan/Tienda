@@ -6,6 +6,8 @@ class crudMysql extends conexion{
     private $conexion;
     private $table;
     private $data;
+    private $select;
+    private $inner;
     private $condicion;
 
     //funcion contructor para que se ejecute primero
@@ -39,18 +41,19 @@ class crudMysql extends conexion{
     public function selectOne(string $table,string $condicion){
         $this->table = $table;
         $this->condicion = $condicion;
-        $consul="SELECT * FROM ".$table." where ".$condicion.";";
+        $consul="SELECT * FROM ".$this->$table." WHERE ".$condicion;
         $selectOne = $this->conexion->prepare($consul);
         $selectOne->execute();
-        $result = $selectOne->fetch(PDO::FETCH_ASSOC);
+        $result = $selectOne->fetchAll(PDO::FETCH_ASSOC);
         return $result;
             
-        } 
+    } 
 
     //funcion que devuelve todos los datos
-    public function selectAll(string $table){
+    public function selectAll(string $table, string $condicion){
         $this->table = $table;
-        $selectAll = $this->conexion->prepare("SELECT * FROM ".$this->table.";");
+        $this->condicion = $condicion;
+        $selectAll = $this->conexion->prepare("SELECT * FROM ".$this->table." ".$this->condicion);
         $selectAll->execute();
         $result = $selectAll->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -73,7 +76,34 @@ class crudMysql extends conexion{
         $result =$this->conexion->prepare("DELETE FROM ".$table." WHERE ".$condicion);
         $result->execute();
         return $result;
-    }   
+    } 
+
+    //funcion de conslta de inner join 
+    public function innerJoin(string $select,string $table,string $inner,string $condicion){
+        $this->select = $select;
+        $this->table = $table;
+        $this->inner = $inner;
+        $this->condicion = $condicion;
+        $sql = $this->select.$this->table.$this->inner.$this->condicion;
+        $selectAll = $this->conexion->prepare($sql);
+        $selectAll->execute();
+        $result = $selectAll->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+        //funcion del menu
+        public function Menu($sql){
+            $selectOne = $this->conexion->prepare($sql);
+            $selectOne->execute();
+            return $selectOne;
+        } 
+
+ 
+
+    
+    
+    
 
 }
 

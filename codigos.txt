@@ -1,0 +1,322 @@
+ foreach ($menus as $Allmenus):
+            
+            if ($Allmenus['url_page']) {
+
+                $cad_menu .= '<li><a href="'.$Allmenus['url_page'].'">'.$Allmenus['name'].'</a>';
+
+            }else{
+                $cad_menu .= '<li><a href="#">'.$Allmenus['name'].'</a>';
+            }
+
+          $dato =  nestedToSingle($menu->AllMenu($Allmenus['id_categorie']));
+          $arrayPadre = array();
+
+         
+
+         depurarArray($arrayPadre);
+         //$cad_menu .= '<ul class="sub_menu">'.$menu->AllMenu().'</ul>';
+
+
+
+           
+
+            //print_r($cad_menu);
+           
+
+            $cad_menu .= '</li>';
+            
+        endforeach;
+
+        return $cad_menu;
+
+
+
+
+
+            function modulosMenu()
+    {
+        $menu = new CategorieModel();
+        $modulos = $menu->AllMenu();
+
+        $id = '';
+       
+        foreach ($modulos as $item => $value) {
+
+            if ($value['parent_id'] == 0) {
+                $id = $value['id_categorie'];
+                $this->cad .='<li id="x"><a href="#">'.$value['name'].'</a>';
+                $this->subModulos($modulos,$id);    
+                $this->cad .='</li>';
+            }
+        }
+
+        return  $this->cad ;
+    }
+
+    function subModulos($items,$id)
+    {
+        
+        
+        $this->cad .='<ul class="sub_menu">';
+        foreach ($items as $item) {
+           
+            if ($item['parent_id'] == $id) {
+                    
+                $this->cad .='<li id="x"><a href="">'.$item['name'].'</a>';
+                $this->subModulos($items,$item['id_categorie']);
+                $this->cad .='</li>';
+                
+             }else{
+
+             }
+             
+        }
+        $this->cad .='</ul>';
+       
+        return $this->cad;
+
+    }
+
+
+
+    function modulosMenu()
+    {
+        $menu = new CategorieModel();
+        $modulos = $menu->AllMenu();
+        
+        foreach ($modulos as $item => $value) {
+
+            if ($value['parent_id'] == 0) {
+                $id = $value['id_categorie'];
+                $this->cad.= '<li>';
+                $this->cad .='<a href="#">'.$value['name'].'</a>';
+                   
+                    $this->subModulos($modulos,$id); 
+                   
+                $this->cad .='</li>';
+            }
+        }
+
+       
+
+        return  $this->cad ;
+    }
+
+    function subModulos($items,$id)
+    {
+       
+        $this->cad .='<ul class="sub_menu">';
+
+        foreach ($items as $item) {
+            
+            if ($item['parent_id'] == $id) {
+               
+                $this->cad .='<li>';
+                $this->cad .='<a href="">'.$item['name'].'</a>';
+                  $this->subModulos($items,$item['id_categorie']);
+                $this->cad .='</li>';
+               
+            }
+           
+        }
+      
+        $this->cad .='</ul>'; 
+
+             return $this->cad;
+
+    }
+
+
+     public function modulosMenu(){
+        
+        $dato = new CategorieModel();
+        $modulo = $dato->getAllMenu();
+
+        $menus = [];
+
+
+        foreach ($modulo AS $index => $row ){
+
+            if ($row['parent_id']) {
+
+                $id = $row['parent_id'];
+
+                $menus['menu_'.$id]['submenu'][] = [
+                    'id_categorie' => $row['id_categorie'],
+                    'name1' => $row['name'],
+                    'url_page' => $row['url_page'],
+                    'order_categorie' => $row['order_categorie'],
+                ];
+                
+            }else{
+
+                $id = $row['id_categorie'];
+
+                $menus['menu_'.$id] = [
+                    'id_categorie' => $row['id_categorie'],
+                    'name1' => $row['name'],
+                    'url_page' => $row['url_page'],
+                ];
+            }
+        }
+
+        depurarArray( $menus);
+        die();
+      
+       
+        $this->html .= '<ul class="main_menu">';
+
+        foreach ( $menus AS $menu ) {
+
+            if( isset( $menu['submenu'] ) ) {
+
+                if ( isset($menu['url_page']) ) {
+                    if ( isset($menu['name1'])) {
+                       
+                        $this->html .= '<li><a href="'.$menu['url_page'].'">'.$menu['name1'].'</a>';
+                    }
+                 }else{
+                     if (isset($menu['name1'])) {
+                        $this->html .= '<li><a href="#">'.$menu['name1'].'</a>';
+
+                     }
+ 
+                 }
+
+                 if (is_array($menu['submenu'])) {
+
+                    $this->html .= '<ul class="sub_menu">';
+
+                     foreach ( $menu['submenu'] AS $submenu ) {
+                        if ($submenu['url_page']) {
+                            
+                            $this->html .= '<li><a href="'.$submenu['url_page'].'">'.$submenu['name1'].'</a></li>';
+                         }else{
+                             
+                            $this->html .= '<li><a href="#">'.$submenu['name1'].'</a></li>';
+                         }
+                     }
+
+                     $this->html .= '</ul>';
+                 }
+
+                 $this->html .= '</li>';
+
+            }else{
+                if ($menu['url_page']) {
+                    $this->html .= '<li><a href="'.$menu['url_page'].'">'.$menu['name1'].'</a></li>';
+                }else{
+                    $this->html .= '<li><a href="#">'.$menu['name1'].'</a></li>';
+
+                }
+            }
+        }
+
+        $this->html .= '</ul>';
+
+       
+
+         return $this->html;
+
+    }
+
+
+
+ global $arrCategorias;
+
+        $dato = new CategorieModel();
+        $arrCategorias = $dato->getAllMenu();
+
+        $haySubMenu=false;
+
+
+
+        for($i=0; $i<count($arrCategorias) && !$haySubMenu; $i++){
+            $haySubMenu=$arrCategorias[$i]['parent_id']==$padre;
+        }
+
+        if(!$haySubMenu) return;
+       
+         
+        $this->html .= '<ul class="main_menu">';
+        
+        foreach($arrCategorias as $cat){
+           
+            if(!$cat['parent_id']==$padre){
+                $this->html .= '<li>';
+                $this->html .= '<a>'.$cat['name'].'</a>';
+                $this->html .= '</li>';
+            }else{
+                $this->html .= '<li>';
+                $this->html .= '<a>'.$cat['name'].'</a><ul class="sub_menu">';
+                $this->modulosMenu($cat['id_categorie']);
+                $this->html .= '</ul></li>';
+               
+            }
+        }
+        
+        $this->html .= '</ul>';
+
+        return $this->html;
+
+
+
+
+
+        //codigo final co matrices
+
+           public function modulsMenu($modulo)
+    {
+        $menus = [];
+        foreach ($modulo AS $index => $row ){
+            if ($row['parent_id']) {
+               $id = $row['parent_id'];
+                $menus['menu_'.$id]['submenu'][] = [
+                    'id_categorie' => $row['id_categorie'],
+                    'name1' => $row['name'],
+                    'url_page' => $row['url_page'],
+                ];
+            }else{
+                $id = $row['id_categorie'];
+                $menus['menu_'.$id] = [
+                    'id_categorie' => $row['id_categorie'],
+                    'name1' => $row['name'],
+                    'url_page' => $row['url_page'],
+                ];
+            }
+        }
+        /* depurarArray($menus);
+        die(); */
+        foreach ( $menus AS $menu ) {
+            if( isset( $menu['submenu'] ) ) {
+                if ( isset($menu['url_page']) ) {
+                    if ( isset($menu['name1'])) {
+                        $this->html .= '<li><a href="'.$menu['url_page'].'">'.$menu['name1'].'</a>';
+                    }
+                 }else{
+                     if (isset($menu['name1'])) {
+                        $this->html .= '<li><a href="#">'.$menu['name1'].'</a>';
+                     }
+                 }
+                 if (is_array($menu['submenu'])) {
+                    $this->html .= '<ul class="sub_menu">';
+                     foreach ( $menu['submenu'] AS $submenu ) {
+                         if ($submenu['url_page']) {
+                            $this->html .= '<li><a href="'.$submenu['url_page'].'">'.$submenu['name1'].'</a></li>';
+                         }else{
+                            $this->html .= '<li><a href="#">'.$submenu['name1'].'</a></li>';
+                         }
+                     }
+                     $this->html .= '</ul>';
+                 }
+                 $this->html .= '</li>';
+            }else{
+                if ($menu['url_page']) {
+                    $this->html .= '<li><a href="'.$menu['url_page'].'">'.$menu['name1'].'</a></li>';
+                }else{
+                    $this->html .= '<li><a href="#">'.$menu['name1'].'</a></li>';
+                }
+            }
+        }
+         return $this->html;
+    }
