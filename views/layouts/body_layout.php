@@ -34,5 +34,11 @@
 	<link rel="stylesheet" type="text/css" href="<?=Assets?>css/util.css">
 	<link rel="stylesheet" type="text/css" href="<?=Assets?>css/main.css">
 <!--===============================================================================================-->
+
+<link rel="stylesheet" href="<?=Libreries?>bootstrap-select/dist/css/bootstrap-select.min.css">
+
 </head>
 <body class="animsition">
+<!--Plugin de omentarios-->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v8.0&appId=137468986271536&autoLogAppEvents=1" nonce="Ue2KjyLL"></script>

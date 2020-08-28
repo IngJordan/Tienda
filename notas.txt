@@ -1,0 +1,3 @@
+crear un modal para anuniar al usuario que fallo la pagina
+
+evitar inyeccion de codigo en los formularios

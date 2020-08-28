@@ -13,6 +13,9 @@ const ActionDefault = "index";
 //ruta de assets
 const Assets = URL_BASE."assets/";
 
+//ruta de libreries
+const Libreries = URL_BASE."libreries/";
+
 //base de datos jordan
 const DB_HOST = "localhost";
 const DB_NAME = "TiendaMvc";

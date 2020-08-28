@@ -1,8 +1,20 @@
 <?php 
 
+function Index()
+{
+    $index = header('Location: http://localhost:8888/Tienda/');
+    return $index;
+}
+
+function MainMenu(){
+    $obj = new IndexController();
+    $menus = $obj->MainMenu();
+    return $menus;
+}
+
 //formato de precios
 function formatMoney(int $preice){
-    $num =PRICE.number_format($preice,2,PUNT,COM)." ".MONEY;
+    $num =PRICE.number_format($preice)." ".MONEY;
     return $num;
 }
 
@@ -14,8 +26,15 @@ function depurarArray($data){
     return $format;
 }
 
+function Encrip($data){
+    $encript = base64_encode($data);
+    return $encript;
+}
 
-
-
+function Descript($data)
+{
+    $encript = base64_decode($data);
+    return $encript;
+}
 
 ?>

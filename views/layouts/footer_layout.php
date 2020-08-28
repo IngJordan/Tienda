@@ -225,5 +225,29 @@
 	<script src="<?=Assets?>js/main.js"></script>
 	<script src="<?=Assets?>js/filterProducts.js"></script>
 
+
+
+<script src="<?=Libreries?>bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="<?=Libreries?>bootstrap-select/dist/js/i18n/default-*.min.js"></script>
+
+
+<!--Plugin de messenger y washap-->
+<script type="text/javascript">
+    (function () {
+        var options = {
+            facebook: "1629986620602076", // Facebook page ID
+            whatsapp: "4431625528", // WhatsApp number
+            call_to_action: "Mandar Mensaje", // Call to action
+            button_color: "#000000", // Color of button
+            position: "left", // Position may be 'right' or 'left'
+            order: "facebook,whatsapp", // Order of buttons
+        };
+        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+</script>
+
 </body>
 </html>

@@ -16,14 +16,15 @@
 
 	        <div class="wrap_header">
 	            <!-- Logo -->
-	            <a href="index.html" class="logo">
+	            <a href="<?=URL_BASE?>" class="logo">
 	                <img src="<?=Assets?>images/icons/logo.png" alt="IMG-LOGO">
 	            </a>
 
 
 	            <div class="wrap_menu">
 	                <nav class="menu text-capitalize">
-						<?=$menus?>	
+						<!--se imprime el menu -->
+						<?= $this->menus ?>	
 	                </nav>
 	            </div>
 
