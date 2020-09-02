@@ -10,7 +10,7 @@
 	            </div>
 
 	            <span class="topbar-child1">
-	                Envío gratis para pedidos estándar superiores a $100.00 MXN
+	                Envío gratis para pedidos superiores a $100.00 MXN
 	            </span>
 	        </div>
 
@@ -37,78 +37,76 @@
 	                <span class="linedivide1"></span>
 
 	                <div class="header-wrapicon2">
+						
 	                    <img src="<?=Assets?>images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown"
 	                        alt="ICON">
-	                    <span class="header-icons-noti">0</span>
+	                    <span class="header-icons-noti"><?=$cantidad?></span>
 
 	                    <!-- Header cart noti -->
 	                    <div class="header-cart header-dropdown">
 	                        <ul class="header-cart-wrapitem">
-	                            <li class="header-cart-item">
-	                                <div class="header-cart-item-img">
-	                                    <img src="<?=Assets?>images/item-cart-01.jpg" alt="IMG">
-	                                </div>
 
-	                                <div class="header-cart-item-txt">
-	                                    <a href="#" class="header-cart-item-name">
-	                                        White Shirt With Pleat Detail Back
-	                                    </a>
+							<?php 
+							
+								if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+									$TOTAL = 0;
+									foreach ($_SESSION['carrito'] as $indice => $value) {
+										$TOTAL = $value['PRICE'] * $value['COUNT'];
+										?>
+										<li class="header-cart-item">
+											
+											<a href="<?=URL_BASE?>cart/DeleteCart&id=<?=$value['ID']?>&sizes=<?=$value['SIZES']?>&color=<?=$value['COLOR']?>">
+												<div class="header-cart-item-img">
+													<img src="<?=Assets?>images/<?=$value['IMG']?>" alt="IMG">
+												</div>
+											</a>
+											
+											<div class="header-cart-item-txt">
+												<a href="<?=URL_BASE?>product/DetailProduct&data=<?= Encrip($value['ID'])?>" class="header-cart-item-name">
+													<?=$value['NAME'];?>
+												</a>
 
-	                                    <span class="header-cart-item-info">
-	                                        1 x $19.00
-	                                    </span>
-	                                </div>
-	                            </li>
+												<span class="header-cart-item-info">
+													Precio: <?=formatMoney($value['PRICE']);?>
+												</span>
 
-	                            <li class="header-cart-item">
-	                                <div class="header-cart-item-img">
-	                                    <img src="<?=Assets?>images/item-cart-02.jpg" alt="IMG">
-	                                </div>
+												<span class="header-cart-item-info">
+													Cantidad: <?=$value['COUNT'];?>
+												</span>
 
-	                                <div class="header-cart-item-txt">
-	                                    <a href="#" class="header-cart-item-name">
-	                                        Converse All Star Hi Black Canvas
-	                                    </a>
+												<span class="header-cart-item-info">
+													Total: <?=formatMoney($TOTAL)?>
+												</span>
 
-	                                    <span class="header-cart-item-info">
-	                                        1 x $39.00
-	                                    </span>
-	                                </div>
-	                            </li>
+											</div>
+	                            		</li>
+										<?php
+									}
 
-	                            <li class="header-cart-item">
-	                                <div class="header-cart-item-img">
-	                                    <img src="<?=Assets?>images/item-cart-03.jpg" alt="IMG">
-	                                </div>
 
-	                                <div class="header-cart-item-txt">
-	                                    <a href="#" class="header-cart-item-name">
-	                                        Nixon Porter Leather Watch In Tan
-	                                    </a>
-
-	                                    <span class="header-cart-item-info">
-	                                        1 x $17.00
-	                                    </span>
-	                                </div>
-	                            </li>
+								}else{
+									?>
+									<li class="header-cart-item">
+										<center>No hay productos</center>
+									</li>
+									<?php
+								}
+							?>
+	                            
 	                        </ul>
 
 	                        <div class="header-cart-total">
-	                            Total: $75.00
+	                            Total: <?=formatMoney($totalProduct)?>
 	                        </div>
 
 	                        <div class="header-cart-buttons">
 	                            <div class="header-cart-wrapbtn">
-	                                <!-- Button -->
-	                                <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-	                                    View Cart
-	                                </a>
 	                            </div>
 
 	                            <div class="header-cart-wrapbtn">
 	                                <!-- Button -->
-	                                <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-	                                    Check Out
+	                                <a href="<?=URL_BASE?>Cart/DetailCart" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Ver Carrito
 	                                </a>
 	                            </div>
 	                        </div>
@@ -154,7 +152,7 @@
 	                                    </a>
 
 	                                    <span class="header-cart-item-info">
-	                                        1 x $19.00
+	                                        1 x $19.00CDSCDSCD
 	                                    </span>
 	                                </div>
 	                            </li>

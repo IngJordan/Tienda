@@ -209,16 +209,10 @@
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
+				swal(nameProduct, "Producto Agregado", "success");
 			});
 		});
 
-		$('.block2-btn-addwishlist').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-			});
-		});
 	</script>
 
 <!--===============================================================================================-->
@@ -230,6 +224,12 @@
 <script src="<?=Libreries?>bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script src="<?=Libreries?>bootstrap-select/dist/js/i18n/default-*.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+<!--Funcion para agregar productos al carrito-->
+<script src="<?=Assets?>ajax/addCart.js"></script>
 
 <!--Plugin de messenger y washap-->
 <script type="text/javascript">
@@ -248,6 +248,8 @@
         var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
     })();
 </script>
+
+
 
 </body>
 </html>

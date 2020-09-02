@@ -1,5 +1,6 @@
 <?php
 //se llama al modelo
+
 require_once('models/CategorieModel.php');
 require_once('models/ProductModel.php');
 
@@ -12,17 +13,24 @@ class IndexController{
     var $menus = "";
     var $categories= "";
     var $products = "";
+    var $cartModal = "";
+    var $cartCount = "";
+    var $objCart = "";
 
     public function __construct() {
-       $this->objCategorie = new CategorieModel;
+       $this->objCategorie = new CategorieModel();
        $this->objProduct = new ProductModel();
-
+       $this->objCart = new CartController();
+      
     }
 
     public function index()
     {
         //funcion del menu
         $this->menus = $this->MainMenu();
+        $this->cartModal = $this->ModalCart();
+        $cantidad = $this->cartModal = $this->ModalCantidad();
+        $totalProduct = $this->cartModal = $this->CartTotal();
         //funcion categorires
         $this->categories = $this->AllCategoriees();
         //funcion productos
@@ -108,6 +116,24 @@ class IndexController{
     {
         $products = $this->objProduct->innerProducts();
         return $products;
+    }
+
+    function ModalCart()
+    {
+        $cart = $this->objCart->AddCart();
+        return $cart;
+    }
+
+    function CartTotal()
+    {
+        $total = $this->objCart->Total();
+        return $total;
+    }
+
+    function ModalCantidad()
+    {
+        $cantidad = $this->objCart->Cantidad();
+        return $cantidad;
     }
 
 

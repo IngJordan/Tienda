@@ -11,6 +11,14 @@ function MainMenu(){
     $menus = $obj->MainMenu();
     return $menus;
 }
+ /*
+function Cartview(){
+   $obj = new CartController();
+    $cart = $obj->AddCart();
+    return $cart;
+   
+}
+ */
 
 //formato de precios
 function formatMoney(int $preice){

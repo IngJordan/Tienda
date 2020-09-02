@@ -37,6 +37,21 @@ class ProductModel extends crudMysql{
         $request = $this->innerJoin($select,$table,$inner,$condicion);
         return $request;
     }
+    function getOneProduct1($id,$sizes,$color)
+    {
+        $select="SELECT PRODUCTS.id_product,PRODUCTS.name,PRODUCTS.description,PRODUCTS.price,PRODUCTS.inventorie,PRODUCTS.discount,IMAGES.route,
+        SIZES.name AS tamaño ,COLORS.name AS color FROM";
+        $table = " `PRODUCTS`";
+        $inner = " INNER JOIN IMAGES
+        ON PRODUCTS.id_product = IMAGES.fk_id_product
+        INNER JOIN SIZES
+        ON PRODUCTS.id_product = SIZES.fk_id_product
+        INNER JOIN COLORS
+        ON PRODUCTS.id_product = COLORS.fk_id_product";
+        $condicion = " WHERE IMAGES.name = 'principal' AND PRODUCTS.id_product = $id AND SIZES.name = '".$sizes."' AND COLORS.name = '".$color."' ";
+        $request = $this->innerJoin($select,$table,$inner,$condicion);
+        return $request;
+    }
 
     function getImagesProduct($id = 0)
     {

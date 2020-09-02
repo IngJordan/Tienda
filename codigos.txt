@@ -320,3 +320,15 @@
         }
          return $this->html;
     }
+
+
+
+
+SELECT PRODUCTS.id_product,PRODUCTS.name,PRODUCTS.description,PRODUCTS.price,PRODUCTS.inventorie,PRODUCTS.discount,IMAGES.route,
+SIZES.name AS tamaño ,COLORS.name AS color FROM `PRODUCTS` INNER JOIN IMAGES
+ON PRODUCTS.id_product = IMAGES.fk_id_product
+INNER JOIN SIZES
+ON PRODUCTS.id_product = SIZES.fk_id_product
+INNER JOIN COLORS
+ON PRODUCTS.id_product = COLORS.fk_id_product
+WHERE IMAGES.name = 'principal' AND PRODUCTS.id_product = 5 AND SIZES.name = 'g' AND COLORS.name = 'amarillo'

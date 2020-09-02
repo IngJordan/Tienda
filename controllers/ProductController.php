@@ -13,10 +13,13 @@ class ProductController{
     var $colors = "";
     var $products = "";
     var $commets = "";
+    var $objCart = "";
 
     public function __construct()
     {
        $this->ModelProduct = new ProductModel();
+       $this->objCart = new CartController();
+
     }
 
     function index()
@@ -27,7 +30,10 @@ class ProductController{
            try {
             $this->menus = MainMenu();
             $this->products = $this->ModelProduct->getProduct($id);
-            
+            $this->cartModal = $this->ModalCart();
+            $cantidad = $this->cartModal = $this->ModalCantidad();
+            $totalProduct = $this->cartModal = $this->CartTotal();
+
             require_once('views/Product/product.php');
            } catch (Exception $e) {
             Index();
@@ -50,6 +56,9 @@ class ProductController{
                 $this->colors = $this->ModelProduct->getColor($id);
                 $this->commets = "product/DetailProduct&data=".$id;
 
+                $this->cartModal = $this->ModalCart();
+                $cantidad = $this->cartModal = $this->ModalCantidad();
+                $totalProduct = $this->cartModal = $this->CartTotal();
                 require_once('views/Product/detail_product.php');
 
             } catch (Exception $e) {
@@ -61,6 +70,24 @@ class ProductController{
     }
 
 
+    //Modal Carrito
+    function ModalCart()
+    {
+        $cart = $this->objCart->AddCart();
+        return $cart;
+    }
+
+    function CartTotal()
+    {
+        $total = $this->objCart->Total();
+        return $total;
+    }
+
+    function ModalCantidad()
+    {
+        $cantidad = $this->objCart->Cantidad();
+        return $cantidad;
+    }
 
 
 

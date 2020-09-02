@@ -2,7 +2,7 @@
     require_once('./views/layouts/body_layout.php');
     require_once('./views/layouts/header_layout.php');
 ?>
-
+<form action="<?=URL_BASE?>Cart/AddCart" method="post">
 	<!-- Product Detail -->
 	<div class="container bgwhite p-t-35 p-b-80">
 		<div class="flex-w flex-sb">
@@ -25,10 +25,15 @@
 				</div>
 			</div>
 
+			
 			<?php 
 			foreach ($this->oneProduct as $product):
 				?>
 					<div class="w-size14 p-t-30 respon5">
+						
+						<!--ID DEL PRODUCTO-->
+						<input name="id" type="text" value="<?=$product['id_product']?>" hidden>
+
 						<h4 class="product-detail-name m-text16 p-b-13">
 							<?=$product['name'];?>
 						</h4>
@@ -45,11 +50,11 @@
 								</div>
 
 								<div class="col-md-6">
-									<select class="selectpicker" data-live-search="true">
+									<select class="selectpicker" data-live-search="true" name="sizes">
 										<?php 
 										foreach ($this->sizes as $size):
 											?>
-												<option class="" data-tokens="<?=$size['name']?>"><?= ucfirst($size['name']);?></option>
+												<option value="<?=$size['name']?>" data-tokens="<?=$size['name']?>"><?= ucfirst($size['name']);?></option>
 											<?php
 										endforeach;
 										?>
@@ -63,11 +68,11 @@
 								</div>
 
 								<div class="col-md-6">
-									<select class="selectpicker text-capitalize" data-live-search="true">
+									<select class="selectpicker text-capitalize" data-live-search="true" name="color">
 										<?php 
 										foreach ($this->colors as $color):
 											?>
-												<option class="" data-tokens="<?=$color['name']?>"><?= ucfirst($color['name']);?></option>
+												<option value="<?=$color['name']?>" data-tokens="<?=$color['name']?>"><?= ucfirst($color['name']);?></option>
 											<?php
 										endforeach;
 										?>
@@ -89,30 +94,36 @@
 								</div>
 							</div>
 
+
+						
+
+
 							<div class="flex-r-m flex-w p-t-10">
 								<div class="w-size16 flex-m flex-w">
 									<div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
+
+
 										<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 											<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-										</button>
+										</button> 
 
-										<input class="size8 m-text18 t-center num-product" type="number" name="num-product" value="1">
+										<input class="size8 m-text18 t-center num-product col-" type="number" name="num-product" value="1" min="1"> 
 
-										<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
+									 	<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
 											<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-										</button>
+										</button> 
 									</div>
 
-									<div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
-										<!-- Button -->
+									 <div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
 										<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-											Add to Cart
+											Agregar
 										</button>
-									</div>
+									</div> 
 								</div>
 							</div>
 						</div>
 
+						
 						<div class="wrap-dropdown-content bo6 p-t-15 p-b-14 active-dropdown-content">
 							<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
 								Descripcion
@@ -131,9 +142,10 @@
 				<?php	
 			endforeach;
 			?>
+			
 		</div>
 	</div>
-
+	</form>
 	<!--Comentarios del producto-->
 	<div class="container">
 		<div class="fb-comments" data-href="<?=URL_BASE?><?=$this->commets?>" data-numposts="20" data-width="100%"></div>

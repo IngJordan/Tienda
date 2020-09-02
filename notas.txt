@@ -1,3 +1,15 @@
 crear un modal para anuniar al usuario que fallo la pagina
 
 evitar inyeccion de codigo en los formularios
+
+encriptar los id 
+
+impelentar el metodo de pago de paypal 
+
+implementar ajax
+
+
+
+
+
+
