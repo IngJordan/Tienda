@@ -7,6 +7,8 @@ require_once('./config/conexion.php');
 require_once('./config/crudMysql.php');
 require_once('./helpers/helpers.php');
 
+
+
 //comprueba si la variables esta definida
 if(isset($_GET['controller'])){
     //guarda el nombre y se concatena .controller, se guarda en la variable

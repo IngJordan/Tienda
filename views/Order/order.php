@@ -1,6 +1,9 @@
 <?php
+
     require_once('./views/layouts/body_layout.php');
     require_once('./views/layouts/header_layout.php');
+
+    
 ?>
 
     
@@ -173,9 +176,12 @@
 
 					<div class="size15 trans-0-4">
 						<!-- Button -->
-						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-							Pagar
-						</button>
+						<form action="<?=URL_BASE?>Sale/Pagar" method="post">
+                            <script
+                            src="https://www.mercadopago.com.mx/integrations/v1/web-payment-checkout.js"
+                            data-preference-id="<?php echo $preference->id; ?>">
+                            </script>
+                        </form>
 					</div>
 				</div>
     </div>
