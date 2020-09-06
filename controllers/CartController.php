@@ -9,7 +9,7 @@ class CartController{
 
     function AddCart()
     {
-        if (isset($_POST['id']) && isset($_POST['sizes']) && isset($_POST['color']) && isset($_POST['num-product'])) {
+        if (isset($_POST['id']) && isset($_POST['sizes']) && isset($_POST['color']) && isset($_POST['num-product']) && is_numeric($_POST['num-product'])) {
            
             $id = $_POST['id'];
             $sizes = $_POST['sizes'];

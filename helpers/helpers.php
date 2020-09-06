@@ -20,6 +20,7 @@ function Cartview(){
 }
  */
 
+
 //formato de precios
 function formatMoney(int $preice){
     $num =PRICE.number_format($preice)." ".MONEY;

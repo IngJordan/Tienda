@@ -3,7 +3,7 @@
 #bloquea el axceso a las carpetas internas
 Options All -Indexes
 
-# muestra los errores de php
+#muestra los errores de php
 #php_flag display_startup_errors on
 #php_flag display_errors on
 #php_flag html_errors on

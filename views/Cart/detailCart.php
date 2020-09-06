@@ -5,7 +5,7 @@
 
 	<!-- Cart -->
 	<section class="cart bgwhite p-t-70 p-b-100">
-		<form action="<?=URL_BASE?>Sale/Order" method="post">
+		<form action="<?=URL_BASE?>Sale/Formulario" method="post">
 			<div class="container">
 				<!-- Cart item -->
 				<div class="container-table-cart pos-relative">
@@ -64,7 +64,9 @@
 												
 												?>
 
-													<input class="size8 m-text18 t-center num-product" type="number" name="cantidad" min="1" value="<?=$value['COUNT']?>" disabled>
+												
+														<input class="size8 m-text18 t-center num-product" type="number" name="num-product" min="1" value="<?=$value['COUNT']?>" disabled>
+													
 
 													<a href="<?=URL_BASE?>cart/Aument&id=<?=$value['ID']?>&sizes=<?=$value['SIZES']?>&color=<?=$value['COLOR']?>">
 														<i class="fa fa-plus"></i>
@@ -94,9 +96,11 @@
 				<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 					<div class="flex-w flex-m w-full-sm">
 						
-
 						<div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">
 							<!-- Button -->
+							<!-- <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+								Actualizar
+							</button> -->
 							
 						</div>
 					</div>
@@ -112,7 +116,7 @@
 				<!-- Total -->
 				<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
 					<h5 class="m-text20 p-b-24">
-						Cart Totals
+						Carrito
 					</h5>
 
 					<!--  -->
@@ -138,9 +142,13 @@
 								
 								if ($totalProduct >= 100) {
 								?>
+								<input type="text" name="envio" value="0" hidden>
 								Gratis
 								<?php
 								}else{
+									?>
+									<input type="text" name="envio" value="100" hidden>
+									<?php
 								echo formatMoney(100);
 								}
 								
@@ -159,13 +167,15 @@
 						<span class="m-text21 w-size20 w-full-sm">
 							<?php
 							
+
 							if ($totalProduct >= 100) {
 								echo formatMoney($totalProduct);
 							}else{
 								echo formatMoney($totalProduct + 100);
 							}
-							
 							?>
+							
+							<input type="text" value="<?=$totalProduct?>" name="total" hidden>
 						</span>
 					</div>
 

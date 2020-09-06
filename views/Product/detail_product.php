@@ -94,24 +94,10 @@
 								</div>
 							</div>
 
-
-						
-
-
 							<div class="flex-r-m flex-w p-t-10">
 								<div class="w-size16 flex-m flex-w">
 									<div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
-
-
-										<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-											<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-										</button> 
-
-										<input class="size8 m-text18 t-center num-product col-" type="number" name="num-product" value="1" min="1"> 
-
-									 	<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-											<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-										</button> 
+										<input class="size8 m-text18 t-center num-product col-" type="text" name="num-product" value="1" hidden> 
 									</div>
 
 									 <div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
