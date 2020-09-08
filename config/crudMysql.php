@@ -17,12 +17,12 @@ class crudMysql extends conexion{
     }
 
     //funcion insert
-    public function insert(string $table, array $data){
+    public function insert(string $table,$data){
         //hacemos referencia a la variable
         $this->table = $table;
         $this->data = $data;
         //preparamos la consulta y resivimos los valores
-        $insert = $this->conexion->prepare("INSERT INTO".$this->table."VALUES(Null,".$this->data.");");
+        $insert = $this->conexion->prepare("INSERT INTO ".$this->table." VALUES (".$this->data.")");
         //ejecutamos la consulta
         $resInsert = $insert->execute();
         //valida si es true
@@ -36,6 +36,27 @@ class crudMysql extends conexion{
         //retorno el valor
         return $lastInsert;
     }
+
+    public function insert1(string $table){
+        //hacemos referencia a la variable
+        $this->table = $table;
+
+        //preparamos la consulta y resivimos los valores
+        $insert = $this->conexion->prepare($table);
+        //ejecutamos la consulta
+        $resInsert = $insert->execute();
+        //valida si es true
+        if ($resInsert) {
+            //optengo el ultimo id regstrado
+            $lastInsert = $this->conexion->lastInsertId();
+        }else{
+            //se inicializa en 0 si algo falla
+            $lastInsert=0;
+        }
+        //retorno el valor
+        return $lastInsert;
+    }
+
 
     //funcion de devuelve un dato
     public function selectOne(string $table,string $condicion){
@@ -60,11 +81,11 @@ class crudMysql extends conexion{
     }
 
     //funcion de actualizar
-    public function update(string $table, array $data,string $condicion){
-        $this->table = $table;
+    public function update(string $data){
+        //$this->table = $table;
         $this->data = $data;
-        $this->condicion = $condicion;
-        $update = $this->conexion->prepare("UPDATE ".$this->table." SET ".$this->data." WHERE ".$this->condicion);
+        //$this->condicion = $condicion;
+        $update = $this->conexion->prepare($data);
         $result = $update->execute();
         return $result;
     }

@@ -69,8 +69,8 @@
                         </div>
                         <div class=" modal-body">
                             <img src="<?=Assets?>images/icons/icon-mercadopago.webp" width="400" class="img img-fluid col-md-12">
-                            <div class=" p-3">
-                                <a href="<?php echo $preference->init_point; ?>">Pagar</a>
+                            <div class="form-group size15 trans-0-4 col-md-5 p-3">
+                                <a class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4 p-4" href="<?php echo $preference->init_point; ?>">Pagar</a>
                             </div>
                         </div>
                     </div>
