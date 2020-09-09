@@ -3,18 +3,6 @@
     require_once('./views/layouts/body_layout.php');
     require_once('./views/layouts/header_layout.php');
 ?>
-
-	<!-- Title Page
-	<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m">
-		<h2 class="l-text2 t-center" style="color:black;">
-			Women
-		</h2>
-		<p class="m-text13 t-center" style="color:black;">
-			New Arrivals Women Collection 2018
-		</p>
-	</section>
-	-->
-
 	<section class="bgwhite p-t-55 p-b-65">
 		<div class="container">
 			<div class="row">
@@ -28,15 +16,11 @@
 								?>
 									<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
 										<div class="block2">
-											<div class="block2-img wrap-pic-w of-hidden pos-relative">
+											<div class="block2-img wrap-pic-w of-hidden pos-relative <?=$product['description'];?>">
 												<img src="<?=Assets?>images/<?=$product['url_image'];?>" alt="IMG-PRODUCT">
 	
 												<div class="block2-overlay trans-0-4">
 													<div class="block2-btn-addcart w-size1 trans-0-4">
-													
-														<!-- <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-															<i class="fa fa-cart-plus"><span> Agregar</span></i>
-														</button> -->
 													</div>
 												</div>
 											</div>
@@ -45,10 +29,35 @@
 												<a href="<?=URL_BASE?>product/DetailProduct&data=<?= Encrip($product['id_product'])?>" class="block2-name dis-block s-text3 p-b-5">
 													<?=$product['name']?>
 												</a>
-	
-												<span class="block2-price m-text6 p-r-5">
-												<?= formatMoney($product['price']);?>
-												</span>
+
+												<?php
+                                            
+													if ($product['discount'] == 0) {
+														?>
+															<span class="block2-price m-text6 p-r-5">
+															<?=formatMoney($product['price']);?>
+															</span>
+														<?php
+													}else{
+														?>
+															<span class="block2-oldprice m-text7 p-r-5">
+																<?=formatMoney($product['price']);?>
+															</span>
+
+															<span class="block2-newprice m-text8 p-r-5">
+															<?php
+															
+															$decial = $product['discount'] / 100;
+															$descount = $product['price'] * $decial;
+															$newtotal = $product['price'] - $descount;
+
+															echo formatMoney($newtotal);
+															?>
+															</span>
+														<?php
+													}
+                                            
+                                           		 ?>
 											</div>
 										</div>
 									</div>

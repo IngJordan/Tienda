@@ -1,11 +1,13 @@
 <?php 
 
+//inicializador de la pagina principal
 function Index()
 {
     $index = header('Location: http://localhost:8888/Tienda/');
     return $index;
 }
 
+//muestra los errores de la pagina
 function ViewError()
 {
     ini_set('display_errors', 1);
@@ -13,24 +15,16 @@ function ViewError()
     error_reporting(E_ALL);  
 }
 
+//inicaliza el menu global de la pagina
 function MainMenu(){
     $obj = new IndexController();
     $menus = $obj->MainMenu();
     return $menus;
 }
- /*
-function Cartview(){
-   $obj = new CartController();
-    $cart = $obj->AddCart();
-    return $cart;
-   
-}
- */
-
 
 //formato de precios
-function formatMoney(int $preice){
-    $num =PRICE.number_format($preice)." ".MONEY;
+function formatMoney(int $precie){
+    $num =PRICE.number_format($precie)." ".MONEY;
     return $num;
 }
 
@@ -42,15 +36,46 @@ function depurarArray($data){
     return $format;
 }
 
+//encriptacion 
 function Encrip($data){
     $encript = base64_encode($data);
     return $encript;
 }
 
+//descriptacion
 function Descript($data)
 {
     $encript = base64_decode($data);
     return $encript;
+}
+
+function CleanString($string)
+{
+    $string = trim($string);
+    $string = stripslashes($string);
+    $string = str_ireplace("<script>","",$string);
+    $string = str_ireplace("</script>","",$string);
+    $string = str_ireplace("<script src","",$string);
+    $string = str_ireplace("<script type=","",$string);
+    $string = str_ireplace("SELECT * FROM","",$string);
+    $string = str_ireplace("DELETE FROM","",$string);
+    $string = str_ireplace("INSERT INTO","",$string);
+    $string = str_ireplace("--","",$string);
+    $string = str_ireplace("^","",$string);
+    $string = str_ireplace("[","",$string);
+    $string = str_ireplace("]","",$string);
+    $string = str_ireplace("==","",$string);
+    $string = str_ireplace("?","",$string);
+    $string = str_ireplace("¿","",$string);
+    $string = str_ireplace('"()"',"",$string);
+    $string = str_ireplace("/","",$string);
+    $string = str_ireplace("'\'","",$string);
+    $string = str_ireplace("?","",$string);
+    $string = str_ireplace("<","",$string);
+    $string = str_ireplace(">","",$string);
+    $string = str_ireplace("=","",$string);
+
+    return $string;
 }
 
 ?>

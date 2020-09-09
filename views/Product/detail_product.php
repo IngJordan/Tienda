@@ -38,9 +38,34 @@
 							<?=$product['name'];?>
 						</h4>
 
-						<span class="m-text17">
-							<?=formatMoney($product['price']);?>
-						</span>
+						<?php
+                                            
+						if ($product['discount'] == 0) {
+							?>
+								<span class="m-text17">
+									<?=formatMoney($product['price']);?>
+								</span>
+							<?php
+						}else{
+							?>
+								<span class="block2-oldprice m-text7 p-r-5">
+									<?=formatMoney($product['price']);?>
+								</span>
+
+								<span class="block2-newprice m-text17 p-r-5 text-danger">
+								<?php
+								
+									$decial = $product['discount'] / 100;
+									$descount = $product['price'] * $decial;
+									$newtotal = $product['price'] - $descount;
+
+									echo formatMoney($newtotal);
+								?>
+								</span>
+							<?php
+						}
+						
+						?>
 
 						<div class="p-t-33 p-b-60">
 

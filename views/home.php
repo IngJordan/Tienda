@@ -96,13 +96,10 @@
 							?>
 								<div class="col-sm-6 col-md-4 col-lg-3 p-b-50 filter <?=$product['name_categori'];?>">
 									<div class="block2 ">
-										<div class="block2-img wrap-pic-w of-hidden pos-relative">
+										<div class="block2-img wrap-pic-w of-hidden pos-relative <?=$product['description'];?>">
 											<img src="<?=Assets?>images/<?=$product['route_image'];?>" alt="IMG-PRODUCT">
 											<div class="block2-overlay trans-0-4">
 												<div class="block2-btn-addcart w-size1 trans-0-4">
-                                                    <!-- <a href="<?=URL_BASE?>Cart/AddCart&id=<?=$product['id_product']?>" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                                                        <i class="fa fa-cart-plus"><span> Agregar</span></i>
-                                                    </a> -->
 												</div>
                                             </div>
                                             
@@ -113,9 +110,35 @@
 												<?=$product['prodduct_name']?>
 											</a>
 
-											<span class="block2-price m-text6 p-r-5">
-                                                 <?=formatMoney($product['product_price']);?>
-											</span>
+                                            <?php
+                                            
+                                            if ($product['discount'] == 0) {
+                                                ?>
+                                                    <span class="block2-price m-text6 p-r-5">
+                                                    <?=formatMoney($product['product_price']);?>
+                                                    </span>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                    <span class="block2-oldprice m-text7 p-r-5">
+                                                        <?=formatMoney($product['product_price']);?>
+                                                    </span>
+
+                                                    <span class="block2-newprice m-text8 p-r-5">
+                                                    <?php
+                                                    
+                                                     $decial = $product['discount'] / 100;
+                                                     $descount = $product['product_price'] * $decial;
+                                                     $newtotal = $product['product_price'] - $descount;
+
+                                                     echo formatMoney($newtotal);
+                                                    ?>
+                                                    </span>
+                                                <?php
+                                            }
+                                            
+                                            ?>
+
 										</div>
 									</div>
 								</div>

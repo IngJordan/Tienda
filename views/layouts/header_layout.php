@@ -40,17 +40,25 @@
 						
 	                    <img src="<?=Assets?>images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown"
 	                        alt="ICON">
-	                    <span class="header-icons-noti"><?=$cantidad?></span>
+					   <?php
+					  	if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])):
+							  ?>
+							 	 <span class="header-icons-noti"><?=$cantidad?></span> 
+							  <?php
+						  else:
+							  ?>
+							 	 <span class="header-icons-noti">0</span>  
+							  <?php
+						  endif;
+					   ?>
 
 	                    <!-- Header cart noti -->
 	                    <div class="header-cart header-dropdown">
 	                        <ul class="header-cart-wrapitem">
-
 							<?php 
-							
-								if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+								if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])):
 									$TOTAL = 0;
-									foreach ($_SESSION['carrito'] as $indice => $value) {
+									foreach ($_SESSION['carrito'] as $indice => $value):
 										$TOTAL = $value['PRICE'] * $value['COUNT'];
 										?>
 										<li class="header-cart-item">
@@ -81,16 +89,15 @@
 											</div>
 	                            		</li>
 										<?php
-									}
+									endforeach;
 
-
-								}else{
+								else:
 									?>
 									<li class="header-cart-item">
-										<center>No hay productos</center>
+										Carrito Vacio
 									</li>
 									<?php
-								}
+								endif;
 							?>
 	                            
 	                        </ul>

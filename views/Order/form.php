@@ -17,75 +17,75 @@
                     <div class="form-group col-md-6">
                         <label>Nombre y Apellido</label>
                         <div class="bo4 of-hidden">
-                            <input type="text" class="form-control" name="nombre">
+                            <input type="text" class="form-control" name="nombre" required>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Correo Electronico</label>
                         <div class="bo4 of-hidden">
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Codigo Postal</label>
                         <div class="bo4 of-hidden">
-                            <input type="text" class="form-control" name="cp">
+                            <input type="number" class="form-control" name="cp" required>
                         </div>
                     </div>
                     <div class="row col-md-12">
                         <div class="form-group col-md-6">
                             <label>Estado</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="estado">
+                                <input type="text" class="form-control" name="estado" required>
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Delegacion / Municipio</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="municipio">
+                                <input type="text" class="form-control" name="municipio" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Colonia / Asentamiento</label>
                         <div class="bo4 of-hidden">
-                            <input type="text" class="form-control" name="colonia">
+                            <input type="text" class="form-control" name="colonia" required>
                         </div>
                     </div>
                     <div class="row col-md-12">
                         <div class="form-group col-md-6">
                             <label>Calle</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="calle">
+                                <input type="text" class="form-control" name="calle" required>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Nº Exterior</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="ext">
+                                <input type="number" class="form-control" name="ext" required>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Nº Interior / Depto(opcional)</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="int">
+                                <input type="number" class="form-control" name="int" >
                             </div>
                         </div>
                     </div>
                     <div class=" form-group col-md-12">
-                        <p>¿Entre que calles esta? (opcional)</p>
+                        <p>¿Entre que calles esta?</p>
                     </div>
                     <div class="row col-md-12">
                         <div class="form-group col-md-6">
                             <label>Calle 1</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="calle1">
+                                <input type="text" class="form-control" name="calle1" required>
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Calle 2</label>
                             <div class="bo4 of-hidden">
-                                <input type="text" class="form-control" name="calle2">
+                                <input type="text" class="form-control" name="calle2" required>
                             </div>
                         </div>
                     </div>
@@ -95,14 +95,14 @@
                     <div class="row form-group col-md-12">
                         <div class="form-group form-check col-md-2">
                             <input class="form-check-input" type="radio" name="radio" id="exampleRadios1"
-                                value="trabajo">
+                                value="trabajo" required>
                             <label class="form-check-label" for="exampleRadios1">
                                 Trabajo
                             </label>
                         </div>
                         <div class="form-group form-check col-md-2">
                             <input class="form-check-input" type="radio" name="radio" id="exampleRadios1"
-                                value="casa">
+                                value="casa" required>
                             <label class="form-check-label" for="exampleRadios1">
                                 Casa
                             </label>
@@ -112,14 +112,14 @@
                         <label>Telefono de contacto</label>
                         <div class="bo4 of-hidden">
                             <input type="number" class="form-control" placeholder="Incluye la lada de tu pais"
-                                name="telefono">
+                                name="telefono" required>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <label>Indicaciones adicionales para entregar tus compras en esta direccion</label>
                         <div class="bo4 of-hidden">
                             <textarea name="referencias" id="" cols="30" rows="10" class=" form-control"
-                                placeholder="Descripcion de la fachada, puntos de referencia para encontrarla, indicaciones de seguridad , etc."></textarea>
+                                placeholder="Descripcion de la fachada, puntos de referencia para encontrarla, indicaciones de seguridad , etc." required></textarea>
                         </div>
                     </div>
                     <div class="form-group size15 trans-0-4 col-md-3">

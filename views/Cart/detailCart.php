@@ -23,7 +23,7 @@
 								<?php                        
 								if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])):
 									$TOTAL = 0;
-									foreach ($_SESSION['carrito'] as $index =>$value) {
+									foreach ($_SESSION['carrito'] as $index =>$value):
 										$TOTAL = $value['PRICE'] * $value['COUNT'];
 										?>
 										<tr class="table-row">
@@ -39,35 +39,24 @@
 											<td class="column-4"><?=formatMoney($value['PRICE'])?></td>
 											<td class="column-4">
 												<div class="">
-
 												<?php
-												
-												if ($value['COUNT'] == 0) {
+												if ($value['COUNT'] == 0):
 													?>
 														<a href="<?=URL_BASE?>cart/DeleteCart&id=<?=$value['ID']?>&sizes=<?=$value['SIZES']?>&color=<?=$value['COLOR']?>">
 															<i class="fa fa-minus"></i>
 														</a>
 													<?php
-												}else{
+												else:
 													?>
 														<a href="<?=URL_BASE?>cart/Descriment&id=<?=$value['ID']?>&sizes=<?=$value['SIZES']?>&color=<?=$value['COLOR']?>">
 															<i class="fa fa-minus"></i>
 														</a> 
 
-														<!-- <button id="disminuir">
-															<i class="fa fa-minus"></i>
-														</button>
-														<input type="number" id="id_product" name="id_product"  value="<?=$value['ID']?>" hidden> -->
-
 													<?php
-												}
-												
+												endif;
 												?>
-
-												
-														<input class="size8 m-text18 t-center num-product" type="number" name="num-product" min="1" value="<?=$value['COUNT']?>" disabled>
+													<input class="size8 m-text18 t-center num-product" type="number" name="num-product" min="1" value="<?=$value['COUNT']?>" disabled>
 													
-
 													<a href="<?=URL_BASE?>cart/Aument&id=<?=$value['ID']?>&sizes=<?=$value['SIZES']?>&color=<?=$value['COLOR']?>">
 														<i class="fa fa-plus"></i>
 													</a>
@@ -79,13 +68,9 @@
 											
 										</tr>
 										<?php
-									}
+									endforeach;
 								else:
-									?>
-									<tr>
-									<td><center>No hay productos</center></td>
-									</tr>
-									<?php
+									
 								endif;
 								?>
 							
@@ -95,13 +80,7 @@
 
 				<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 					<div class="flex-w flex-m w-full-sm">
-						
-						<div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">
-							<!-- Button -->
-							<!-- <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-								Actualizar
-							</button> -->
-							
+						<div class="size12 trans-0-4 m-t-10 m-b-10 m-r-10">							
 						</div>
 					</div>
 
@@ -139,19 +118,17 @@
 						<div class="w-size20 w-full-sm">
 							<p class="s-text8 p-b-23">
 								<?php 
-								
-								if ($totalProduct >= 100) {
-								?>
-								<input type="text" name="envio" value="0" hidden>
-								Gratis
-								<?php
-								}else{
+									if ($totalProduct >= 100):
+									?>
+									<input type="text" name="envio" value="0" hidden>
+									Gratis
+									<?php
+									else:
 									?>
 									<input type="text" name="envio" value="100" hidden>
 									<?php
-								echo formatMoney(100);
-								}
-								
+									echo formatMoney(100);
+									endif;
 								?>
 							</p>
 							
@@ -166,13 +143,11 @@
 
 						<span class="m-text21 w-size20 w-full-sm">
 							<?php
-							
-
-							if ($totalProduct >= 100) {
+							if ($totalProduct >= 100):
 								echo formatMoney($totalProduct);
-							}else{
+							else:
 								echo formatMoney($totalProduct + 100);
-							}
+							endif;
 							?>
 							
 							<input type="text" value="<?=$totalProduct?>" name="total" hidden>
@@ -181,9 +156,21 @@
 
 					<div class="size15 trans-0-4">
 						<!-- Button -->
-						<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-							Siguiente
-						</button>
+						<?php
+							if (isset($_SESSION['carrito'])):
+								?>
+								<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+									Siguiente
+								</button>
+								<?php
+							else:
+								?>
+								<button class="flex-c-m sizefull bg1 bo-rad-23  s-text1 trans-0-4" disabled>
+									Siguiente
+								</button>
+								<?php
+							endif
+						?>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,4 @@
 <?php
-
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -13,7 +11,7 @@ require('./vendor/autoload.php');
 require_once('./models/SuccessModel.php');
 
 
-//ViewError();
+ViewError();
 
 //vendedor
 //id 638025510
@@ -48,148 +46,196 @@ class SaleController
 
     function Formulario()
     {
-        $this->menus = MainMenu();
-        $this->cartModal = $this->ModalCart();
-        $cantidad = $this->cartModal = $this->ModalCantidad();
-        $totalProduct = $this->cartModal = $this->CartTotal(); 
+        if (isset($_SESSION['carrito'])):
+            $this->menus = MainMenu();
+            $this->cartModal = $this->ModalCart();
+            $cantidad = $this->cartModal = $this->ModalCantidad();
+            $totalProduct = $this->cartModal = $this->CartTotal(); 
 
+            if(!isset($_SESSION['total-product'])):
+                $_SESSION['total-product'] = array(
+                    'envio' =>$_POST['envio'],
+                    'total' =>$_POST['total']
+                );
 
-        if(!isset($_SESSION['total-product'])) {
-            $_SESSION['total-product'] = array(
-                'envio' =>$_POST['envio'],
-                'total' =>$_POST['total']
-            );
-        }else{
-            $_SESSION['total-product'] = array(
-                'envio' =>$_POST['envio'],
-                'total' =>$_POST['total']
-            );
-        }
+            else:
+                $_SESSION['total-product'] = array(
+                    'envio' =>$_POST['envio'],
+                    'total' =>$_POST['total']
+                );
+            endif;
+            
+            require_once('views/Order/form.php');
+        else:
 
+            header('Location: '.URL_BASE);
 
-        require_once('views/Order/form.php');
+        endif;
     }
 
     function Registro()
     {
+        if (isset($_SESSION['carrito'])):
 
-        if (isset($_POST['nombre']) && isset($_POST['email']) && isset($_POST['cp']) && isset($_POST['estado']) && isset($_POST['municipio']) && isset($_POST['colonia']) && isset($_POST['calle']) && isset($_POST['ext']) && isset($_POST['int']) && isset($_POST['calle1']) && isset($_POST['calle2']) && isset($_POST['radio']) && isset($_POST['telefono']) && isset($_POST['referencia'])) {
-           
-        }else{
+            if(!isset($_POST['nombre']) ? $_POST['nombre'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['email']) ? $_POST['email'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['cp']) ? $_POST['cp'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['estado']) ? $_POST['estado'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['municipio']) ? $_POST['municipio'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['colonia']) ? $_POST['colonia'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['calle']) ? $_POST['calle'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['ext']) ? $_POST['ext'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['int']) ? $_POST['int'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['calle1']) ? $_POST['calle1'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['calle2']) ? $_POST['calle2'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['radio']) ? $_POST['radio'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['telefono']) ? $_POST['telefono'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            elseif(!isset($_POST['referencias']) ? $_POST['referencias'] : null):
+                header('Location: '.URL_BASE.' Sale/Formulario');
+            else:
 
-            $_SESSION['form-envio'] = array(
-                'name' =>$_POST['nombre'],
-                'email' =>$_POST['email'],
-                'cp' =>$_POST['cp'],
-                'estado' =>$_POST['estado'],
-                'municipio' =>$_POST['municipio'],
-                'colonia' =>$_POST['colonia'],
-                'calle' =>$_POST['calle'],
-                'ext' =>$_POST['ext'],
-                'int' =>$_POST['int'],
-                'calle1' =>$_POST['calle1'],
-                'calle2' =>$_POST['calle2'],
-                'radio' =>$_POST['radio'],
-                'telefono' =>$_POST['telefono'],
-                'referencias' =>$_POST['referencias']
-            );
+                $_SESSION['form-envio'] = array(
+                    'name' =>   CleanString($_POST['nombre']),
+                    'email' =>  CleanString($_POST['email']),
+                    'cp' =>     CleanString($_POST['cp']) ,
+                    'estado' => CleanString($_POST['estado']),
+                    'municipio' => CleanString($_POST['municipio']) ,
+                    'colonia' => CleanString($_POST['colonia']),
+                    'calle' => CleanString($_POST['calle']),
+                    'ext' => CleanString($_POST['ext']),
+                    'int' => CleanString($_POST['int']),
+                    'calle1' => CleanString($_POST['calle1']),
+                    'calle2' => CleanString($_POST['calle2']),
+                    'radio' => CleanString($_POST['radio']),
+                    'telefono' => CleanString($_POST['telefono']),
+                    'referencias' => CleanString($_POST['referencias'])
+                );
 
-            header ("Location: ".URL_BASE."Sale/Pago");
-        }
+                header ("Location: ".URL_BASE."Sale/Pago");
+
+            endif;
+
+        else:
+            header ("Location: ".URL_BASE);
+        endif;
     }
 
     function Pago()
     {
-        $this->menus = MainMenu();
-        $this->cartModal = $this->ModalCart();
-        $cantidad = $this->cartModal = $this->ModalCantidad();
-        $totalProduct = $this->cartModal = $this->CartTotal();
+        if (isset($_SESSION['carrito'])):
+            $this->menus = MainMenu();
+            $this->cartModal = $this->ModalCart();
+            $cantidad = $this->cartModal = $this->ModalCantidad();
+            $totalProduct = $this->cartModal = $this->CartTotal();
 
-        // Agrega credenciales //vendedor
-        MercadoPago\SDK::setAccessToken('TEST-6674804345396962-090319-656db01b6de286e8bd3251f0525af531-638025510');
-        // Crea un objeto de preferencia
-        $preference = new MercadoPago\Preference();
+            // Agrega credenciales //vendedor
+            MercadoPago\SDK::setAccessToken('TEST-6674804345396962-090319-656db01b6de286e8bd3251f0525af531-638025510');
+            // Crea un objeto de preferencia
+            $preference = new MercadoPago\Preference();
 
-        $preference->back_urls = array(
-            "success" => URL_BASE."Sale/Success",
-            "failure" => "http://www.tu-sitio/failure",
-            "pending" => "http://www.tu-sitio/pending"
-        );
+            $preference->back_urls = array(
+                "success" => URL_BASE."Sale/Success"
+            );
+            
+            $datos = array();
+
+            foreach ($_SESSION['carrito'] as $value):
+                // Crea un ítem en la preferencia
+                $item = new MercadoPago\Item();
+                $item->title = $value['NAME'];
+                $item->description = $value['DESCRIPTION'].' '.$value['SIZES'].' '.$value['COLOR'];
+                $item->quantity = $value['COUNT'];
+                $item->unit_price = $value['PRICE'];
+                $datos[] = $item;
+                
+            endforeach;
+
+            $shipments = new MercadoPago\Shipments();
         
-        $datos = array();
-
-        foreach ($_SESSION['carrito'] as $index => $value) {
-            // Crea un ítem en la preferencia
-            $item = new MercadoPago\Item();
-            $item->title = $value['NAME'];
-            $item->description = $value['DESCRIPTION'].' '.$value['SIZES'].' '.$value['COLOR'];
-            $item->quantity = $value['COUNT'];
-            $item->unit_price = $value['PRICE'];
-            $datos[] = $item;
-        }
-
-        $shipments = new MercadoPago\Shipments();
-     
-        $shipments->cost = (int) $_SESSION['total-product']['envio'];
+            $shipments->cost = (int) $_SESSION['total-product']['envio'];
+            
+            $preference->items = $datos;
+            $preference->shipments = $shipments;
         
-        $preference->items = $datos;
-        $preference->shipments = $shipments;
-    
-        $preference->save();
+            $preference->save();
 
-        require_once('./views/Order/payment.php');
+            require_once('./views/Order/payment.php');
+        else:
+            header('Location: '.URL_BASE);
+        endif;
+        
     }
 
     function Success()
     {
-        $this->menus = MainMenu();
-        $this->cartModal = $this->ModalCart();
-        $cantidad = $this->cartModal = $this->ModalCantidad();
-        $totalProduct = $this->cartModal = $this->CartTotal();
+       if (isset($_SESSION['carrito'])):
 
+            $this->menus = MainMenu();
+            $this->cartModal = $this->ModalCart();
+            $cantidad = $this->cartModal = $this->ModalCantidad();
+            $totalProduct = $this->cartModal = $this->CartTotal();
 
-        $envio = $_SESSION['total-product']['envio'];
-        $subtotal = $_SESSION['total-product']['total'];
+            $envio = $_SESSION['total-product']['envio'];
+            $subtotal = $_SESSION['total-product']['total'];
 
-        $total = $envio + $subtotal;
+            //campturamos el total de la venta con el envio
+            $total = $envio + $subtotal;
 
+            //recuperamos el ultimo id registrado en sales
+            $id_sale = $this->objSuccess->Sale("null,$total,null,1");
 
-        //insertar tabla sales
-        $sales = "null,$total,null,1";
+            if (!empty($id_sale)):
+                //insert tabla sends
+                $id_sends = $this->objSuccess->Sends("null,'".$_SESSION['form-envio']["name"]."','".$_SESSION['form-envio']["email"]."',".$_SESSION['form-envio']['cp'].",".$_SESSION['form-envio']['estado'].",".$_SESSION['form-envio']['municipio'].",".$_SESSION['form-envio']['colonia'].",".$_SESSION['form-envio']['calle'].",".$_SESSION['form-envio']['ext'].",".$_SESSION['form-envio']['int'].",".$_SESSION['form-envio']['calle1'].",".$_SESSION['form-envio']['calle2'].",'".$_SESSION['form-envio']["radio"]."',".$_SESSION['form-envio']['telefono'].",".$_SESSION['form-envio']['referencias'].",$id_sale,4");
 
-        //recuperamos el ultimo id registrado en sales
-        $id_sale = $this->objSuccess->Sale($sales);
+                if (!empty($id_sends)):
+                    //insertar y actualizar productos vendidos y restar el inventario
+                    $id_productSale = $this->objSuccess->Product_Sale($id_sale);
 
-        //insertar tabla sends
-        $cadena = "INSERT INTO `SENDS`(`id_send`, `name`, `email`, `cp`, `state`, `municipality`, `colony`, `street`, `exterior`, `interior`, `street1`, `street2`, `options`, `telephone`, `referencias`, `fk_id_sale`, `fk_id_status`)
-        VALUES(null,'".$_SESSION['form-envio']["name"]."','".$_SESSION['form-envio']["email"]."',".$_SESSION['form-envio']['cp'].",".$_SESSION['form-envio']['estado'].",".$_SESSION['form-envio']['municipio'].",".$_SESSION['form-envio']['colonia'].",".$_SESSION['form-envio']['calle'].",".$_SESSION['form-envio']['ext'].",".$_SESSION['form-envio']['int'].",".$_SESSION['form-envio']['calle1'].",".$_SESSION['form-envio']['calle2'].",'".$_SESSION['form-envio']["radio"]."',".$_SESSION['form-envio']['telefono'].",".$_SESSION['form-envio']['referencias'].",$id_sale,4)";
-       
-        $this->objSuccess->Sends($cadena);
+                    if (!empty($id_productSale)):
+                        //insertar tabla payments
+                        $id_payment = $this->objSuccess->Payments("null,5,$id_sale");
+                        if (!empty($id_payment)):
+                            $Message_sent = $this->Send($_SESSION['carrito']);
+                            if ($Message_sent == 'true'):
+                                unset($_SESSION['carrito']);
+                                unset($_SESSION['total-product']);
+                                unset($_SESSION['form-envio']);
+                                require_once('./views/Order/success.php');
+                            else:
+                                header ("Location: ".URL_BASE);
+                            endif;
+                        else:
+                            header('Location: '.URL_BASE);
+                        endif;
+                    else:
+                        header('Location: '.URL_BASE);
+                    endif;
 
-        //insertar tabla product-sold
-        foreach ($_SESSION['carrito'] as $item =>$value ) {
-            $cadena = "INSERT INTO `PRODUCTS-SOLD`(`id_sold`, `count`, `price`, `total`, `characteristic`, `fk_id_product`, `fk_id_sale`)
-            VALUES(null,".$value['COUNT'].",".$value['PRICE'].",".$value['PRICE']*$value['COUNT'].",'".$value['COLOR'].",".$value['SIZES']."',".$value['ID'].",$id_sale)";
-            $this->objSuccess->Product_Sale($cadena);
+                else:
+                    header('Location: '.URL_BASE);
+                endif;
 
-            $cadena1 = "UPDATE `PRODUCTS` INNER JOIN COLORS INNER JOIN SIZES
-            SET COLORS.count = COLORS.count - ".$value['COUNT'].", PRODUCTS.inventorie = PRODUCTS.inventorie - ".$value['COUNT'].", SIZES.count = SIZES.count - ".$value['COUNT']." WHERE COLORS.fk_id_product = ".$value['ID']." and PRODUCTS.id_product = ".$value['ID']." and COLORS.name = '".$value['COLOR']."' and SIZES.name = '".$value['SIZES']."' and SIZES.fk_id_product = ".$value['ID']." ";
-            $this->objSuccess->Payments($cadena1);
-        }
+            else:
+                header('Location: '.URL_BASE);
+            endif;
 
-          //insertar tabla payments
-          $cadena = "INSERT INTO `PAYMENTS`(`id_payment`, `fk_id_status`, `fk_id_sale`)
-          VALUES(null,5,$id_sale)";
-          $this->objSuccess->Payments($cadena);
-
-         $Message_sent = $this->Send($_SESSION['carrito']);
-
-         if ($Message_sent == 'true') {
-            require_once('./views/Order/success.php');
-         }else{
-            header ("Location: ".URL_BASE);
-         }
-
+        else:
+            header('Location: '.URL_BASE);
+        endif;
     }
 
 
@@ -290,14 +336,6 @@ class SaleController
         $cantidad = $this->objCart->Cantidad();
         return $cantidad;
     }
-
-
-
-
-
-
-
-
 
 }
 

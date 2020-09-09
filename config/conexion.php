@@ -12,6 +12,7 @@ class conexion{
             $conect = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";",DB_USER,DB_PASSWORD,$opciones);
             //establece los atributos
             $conect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
             //imprime un mensaje si esta conectado
             //echo 'conectado';
             return $conect;

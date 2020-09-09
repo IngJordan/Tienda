@@ -17,7 +17,7 @@ class crudMysql extends conexion{
     }
 
     //funcion insert
-    public function insert(string $table,$data){
+    public function insert(string $table,string $data){
         //hacemos referencia a la variable
         $this->table = $table;
         $this->data = $data;

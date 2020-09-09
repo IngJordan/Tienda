@@ -55,18 +55,44 @@ class CartController{
 
         foreach ($resultado as $item) {
 
-            $_SESSION['carrito'][$id.','.$sizes.','.$color] = array(
-                'ID' =>$item['id_product'],
-                'NAME' =>$item['name'],
-                'DESCRIPTION' =>$item['description'],
-                'PRICE' =>$item['price'],
-                'INVENTORIE' =>$item['inventorie'],
-                'DISCOUNT' =>$item['discount'],
-                'SIZES' =>$item['tamaño'],
-                'COLOR' =>$item['color'],
-                'IMG' =>$item['route'],
-                'COUNT' => $cantidad
-            );
+
+            if ($item['discount'] == 0) {
+
+                $_SESSION['carrito'][$id.','.$sizes.','.$color] = array(
+                    'ID' =>$item['id_product'],
+                    'NAME' =>$item['name'],
+                    'DESCRIPTION' =>$item['description'],
+                    'PRICE' =>$item['price'],
+                    'INVENTORIE' =>$item['inventorie'],
+                    'DISCOUNT' =>$item['discount'],
+                    'SIZES' =>$item['tamaño'],
+                    'COLOR' =>$item['color'],
+                    'IMG' =>$item['route'],
+                    'COUNT' => $cantidad
+                );
+            }else{
+
+                $decial   = $item['discount'] / 100;
+                $descount = $item['price'] * $decial;
+                $newtotal = $item['price'] - $descount;
+
+                $_SESSION['carrito'][$id.','.$sizes.','.$color] = array(
+                    'ID' =>$item['id_product'],
+                    'NAME' =>$item['name'],
+                    'DESCRIPTION' =>$item['description'],
+                    'PRICE' => $newtotal,
+                    'INVENTORIE' =>$item['inventorie'],
+                    'DISCOUNT' =>$item['discount'],
+                    'SIZES' =>$item['tamaño'],
+                    'COLOR' =>$item['color'],
+                    'IMG' =>$item['route'],
+                    'COUNT' => $cantidad
+                );
+
+
+            }
+
+            
             
         }
 

@@ -4,8 +4,8 @@
 class ProductModel extends crudMysql{
 
     public function innerProducts(){
-        $select="SELECT PRODUCTS.id_product,PRODUCTS.name as prodduct_name,PRODUCTS.description,PRODUCTS.price as product_price,PRODUCTS.discount,PRODUCTS.fk_id_status,
-        STATUS.name,STATUS.description,IMAGES.name as name_imagen,IMAGES.route as route_image,CATEGORIES.name as name_categori FROM";
+        $select="SELECT PRODUCTS.id_product,PRODUCTS.name as prodduct_name,PRODUCTS.description,PRODUCTS.price as product_price,PRODUCTS.discount
+        ,IMAGES.name as name_imagen,IMAGES.route as route_image,CATEGORIES.name as name_categori,STATUS.description FROM";
         $table = " PRODUCTS";
         $inner = " INNER JOIN CATEGORIES ON PRODUCTS.fk_id_categorie = CATEGORIES.id_categorie
         INNER JOIN STATUS ON PRODUCTS.fk_id_status = STATUS.id_statu
@@ -86,9 +86,10 @@ class ProductModel extends crudMysql{
 
     function getProduct($id = 0)
     {
-        $select="SELECT PRODUCTS.id_product,PRODUCTS.name,PRODUCTS.description,PRODUCTS.price,IMAGES.route AS url_image FROM";
+        $select="SELECT PRODUCTS.id_product,PRODUCTS.name,PRODUCTS.description,PRODUCTS.price,IMAGES.route AS url_image,PRODUCTS.discount,STATUS.description FROM";
         $table = " `PRODUCTS`";
-        $inner = " INNER JOIN CATEGORIES ON PRODUCTS.fk_id_categorie = CATEGORIES.id_categorie INNER JOIN IMAGES ON PRODUCTS.id_product = IMAGES.fk_id_product";
+        $inner = " INNER JOIN CATEGORIES ON PRODUCTS.fk_id_categorie = CATEGORIES.id_categorie INNER JOIN IMAGES ON PRODUCTS.id_product = IMAGES.fk_id_product
+        INNER JOIN STATUS ON PRODUCTS.fk_id_status = STATUS.id_statu";
         $condicion = " WHERE IMAGES.name = 'principal' AND PRODUCTS.fk_id_categorie = $id ORDER BY RAND() LIMIT 20;";
         $request = $this->innerJoin($select,$table,$inner,$condicion);
         return $request;
