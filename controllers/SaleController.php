@@ -3,7 +3,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-
 require_once('./helpers/helpers.php');
 // SDK de Mercado Pago
 require('./vendor/autoload.php');
@@ -11,7 +10,7 @@ require('./vendor/autoload.php');
 require_once('./models/SuccessModel.php');
 
 
-ViewError();
+//ViewError();
 
 //vendedor
 //id 638025510
@@ -147,9 +146,13 @@ class SaleController
             $preference = new MercadoPago\Preference();
 
             $preference->back_urls = array(
-                "success" => URL_BASE."Sale/Success"
+                "success" => URL_BASE."Sale/Success",
+                "failure" => URL_BASE."Sale/failure",
+                "pending" => URL_BASE."Sale/pending"
             );
-            
+
+            $preference->auto_return = "approved";
+
             $datos = array();
 
             foreach ($_SESSION['carrito'] as $value):
@@ -179,7 +182,7 @@ class SaleController
         
     }
 
-    function Success()
+    function Success($pending = 0)
     {
        if (isset($_SESSION['carrito'])):
 
@@ -206,20 +209,31 @@ class SaleController
                     $id_productSale = $this->objSuccess->Product_Sale($id_sale);
 
                     if (!empty($id_productSale)):
-                        //insertar tabla payments
-                        $id_payment = $this->objSuccess->Payments("null,5,$id_sale");
-                        if (!empty($id_payment)):
-                            $Message_sent = $this->Send($_SESSION['carrito']);
-                            if ($Message_sent == 'true'):
+                        //insertar tabla payments 
+                        if ($pending == 0):
+                             $id_payment = $this->objSuccess->Payments("null,5,$id_sale");
+                             if (!empty($id_payment)):
+                                $Message_sent = $this->Send($_SESSION['carrito']);
+                                if ($Message_sent == 'true'):
+                                    unset($_SESSION['carrito']);
+                                    unset($_SESSION['total-product']);
+                                    unset($_SESSION['form-envio']);
+                                    require_once('./views/Order/success.php');
+                                else:
+                                    header ("Location: ".URL_BASE);
+                                endif;
+                            else:
+                                header('Location: '.URL_BASE);
+                            endif;
+                        else:
+                            $id_payment = $this->objSuccess->Payments("null,6,$id_sale");
+                            if (!empty($id_payment)):
                                 unset($_SESSION['carrito']);
                                 unset($_SESSION['total-product']);
                                 unset($_SESSION['form-envio']);
-                                require_once('./views/Order/success.php');
                             else:
-                                header ("Location: ".URL_BASE);
+                                header('Location: '.URL_BASE);
                             endif;
-                        else:
-                            header('Location: '.URL_BASE);
                         endif;
                     else:
                         header('Location: '.URL_BASE);
@@ -238,7 +252,29 @@ class SaleController
         endif;
     }
 
+    function failure()
+    {
+        $this->menus = MainMenu();
+        $this->cartModal = $this->ModalCart();
+        $cantidad = $this->cartModal = $this->ModalCantidad();
+        $totalProduct = $this->cartModal = $this->CartTotal();
 
+        require_once('./views/Error/failure.php');
+    }
+
+    function pending()
+    {
+        $this->menus = MainMenu();
+        $this->cartModal = $this->ModalCart();
+        $cantidad = $this->cartModal = $this->ModalCantidad();
+        $totalProduct = $this->cartModal = $this->CartTotal();
+
+        $pending = 6;
+
+        $this->Success($pending);
+
+        require_once('./views/Error/pending.php');
+    }
 
     function Send(array $sesion)
     {
@@ -336,6 +372,10 @@ class SaleController
         $cantidad = $this->objCart->Cantidad();
         return $cantidad;
     }
+
+
+
+
 
 }
 

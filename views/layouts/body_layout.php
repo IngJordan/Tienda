@@ -37,6 +37,8 @@
 
 <link rel="stylesheet" href="<?=Libreries?>bootstrap-select/dist/css/bootstrap-select.min.css">
 
+<link rel="stylesheet" href="<?=Libreries?>DataTables/datatables.min.css">
+
 </head>
 <body class="animsition">
 <!--Plugin de omentarios-->

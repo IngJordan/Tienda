@@ -3,11 +3,13 @@
     require_once('./views/layouts/header_layout.php'); 
 ?>
 
-<section class="bg-title-page p-3">
-    <h2 class="l-text2 t-center">
-        <span class="text-black">Realizar Pago</span>
-    </h2>
+
+<section class=" container-fluid p-4 l-text2">
+    <div class=" border col-md-12 p-3">
+        <h1 class="text-center text-black">REALIZAR PAGO</h1>
+    </div>
 </section>
+
 <form action="" method="post">
     <section class="container p-3">
         <div class="row col-md-12">

@@ -4,9 +4,15 @@ evitar inyeccion de codigo en los formularios
 
 encriptar los id 
 
-
-
 implementar ajax
+
+validacion de paginas si hay eerorres 
+
+pagina de lista pedidos
+
+modal para iniciar sesion 
+
+y registrase
 
 
 

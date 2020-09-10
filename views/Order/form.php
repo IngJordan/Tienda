@@ -2,12 +2,13 @@
     require_once('./views/layouts/body_layout.php');
     require_once('./views/layouts/header_layout.php'); 
 ?>
-
-<section class="bg-title-page flex-col-c-m">
-    <h2 class="l-text2 t-center">
-        <span class="text-black">Registro de envio</span>
-    </h2>
+<section class=" container-fluid p-4 l-text2">
+    <div class=" border col-md-12 p-3">
+        <h1 class="text-center text-black">FORMULARIO DE ENVIO</h1>
+    </div>
 </section>
+
+<div class=" clearfix"></div>
 
 <form action="<?=URL_BASE?>Sale/Registro" method="post">
     <section class="p-t-70 p-b-100">

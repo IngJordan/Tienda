@@ -30,12 +30,8 @@
 
 	            <!-- Header Icon -->
 	            <div class="header-icons">
-	                <a href="#" class="header-wrapicon1 dis-block">
-	                    <img src="<?=Assets?>images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-	                </a>
 
-	                <span class="linedivide1"></span>
-
+					
 	                <div class="header-wrapicon2">
 						
 	                    <img src="<?=Assets?>images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown"
@@ -117,7 +113,31 @@
 	                                </a>
 	                            </div>
 	                        </div>
-	                    </div>
+						</div>
+						
+					</div>
+
+					<span class="linedivide1"></span>
+
+					<div class="header-wrapicon2">
+						
+	                    <img src="<?=Assets?>images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown"
+	                        alt="ICON">
+
+	                    <!-- Header user -->
+	                    <div class="header-cart header-dropdown">
+	                        <ul class="header-cart-wrapitem">
+								<li class="header-cart-item">
+								<a href="<?=URL_BASE?>User/Login">Login</a>
+								</li>
+								<li>
+								<a href="">Mi cuenta</a>
+								</li>
+								<li>
+								<a href="<?=URL_BASE?>User/Myorder">Mis pedidos</a>
+								</li>
+	                        </ul>	                       
+						</div>
 	                </div>
 	            </div>
 	        </div>
