@@ -28,11 +28,16 @@ class UserModel extends crudMysql{
         return $request;
     }
 
-      
-    /*  FROM SALES 
+    function getAddress($id_user,$id_sale)
+    {
+        $select = "SELECT * FROM";
+        $table = " `SENDS` ";
+        $inner = " INNER JOIN SALES ON SENDS.fk_id_sale = SALES.id_sale";
+        $condicion = " WHERE SENDS.fk_id_sale = $id_sale AND SALES.fk_id_user = $id_user ";
+        $request = $this->innerJoin($select,$table,$inner,$condicion);
 
- */
-
+        return $request;
+    }
 
 }
 

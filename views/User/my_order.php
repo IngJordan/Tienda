@@ -24,7 +24,7 @@
             <tbody>
                 <?php
                 $count = 1;
-                foreach ($listOrder as $value) {
+                foreach ($listOrder as $value):
                     ?>
 
                     <tr>
@@ -45,13 +45,13 @@
                         ?>
                         <td>
                             <a href="<?=URL_BASE?>User/DetailOrder&data=<?=Encrip($value['id_sale'])?>"> Detalle </a>
-                            <a href=""> Resivo </a>
+                            <a href="<?=URL_BASE?>User/Pdf&data=<?=Encrip($value['id_sale'])?>" target="_blank"> Resivo (PDF) </a>
                         </td>
                     </tr>
 
                     <?php
                     $count ++;
-                }
+                endforeach;
                 
                 ?>
             </tbody>
