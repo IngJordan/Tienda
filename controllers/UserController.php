@@ -32,6 +32,59 @@ class UserController{
 
         require_once('./views/User/login.php');
     }
+
+    function UserCheck()
+    {
+        if (!isset($_GET['data'])):
+            header('Location:'.URL_BASE);
+        else:
+
+            $accion = Descript($_GET['data']);
+
+            switch ($accion) {
+                case 'login':
+                   
+                   /*  if (!isset($_POST['email'])):
+                        header('Location:'.URL_BASE);
+                     elseif(!isset($_POST['password'])):
+                      header('Location:'.URL_BASE);
+                     endif;
+              
+                     $email = $_POST['email'];
+                     $password = $_POST['password'];
+                     $password_encript = Encrip($password); */
+
+
+                    break;
+
+                case 'registro':
+                    
+                  
+
+
+
+                    break;
+                
+                default:
+                    header('Location:'.URL_BASE);
+                    break;
+            }
+
+        endif;
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
     
 
     function Myorder(){
