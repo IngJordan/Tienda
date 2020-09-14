@@ -4,6 +4,7 @@ require_once('./models/UserModel.php');
 require_once('./vendor/autoload.php');
 
 use Dompdf\Dompdf;
+use Sabberworm\CSS\Value\URL;
 
 ViewError();
 
@@ -44,45 +45,142 @@ class UserController{
             switch ($accion) {
                 case 'login':
                    
-                   /*  if (!isset($_POST['email'])):
-                        header('Location:'.URL_BASE);
-                     elseif(!isset($_POST['password'])):
-                      header('Location:'.URL_BASE);
-                     endif;
+                        if (!isset($_POST['email'])):
+                            header('Location:'.URL_BASE);
+                            elseif(!isset($_POST['password'])):
+                            header('Location:'.URL_BASE);
+                            else:
+
+                            $email = $_POST['email'];
+                            $password = $_POST['password'];
+                            $password_encript = Encrip($password);
+
+                            $infoUser = $this->objUser->Check($email,$password_encript);
+
+                            if (!empty($infoUser)) {
+                                foreach ($infoUser as $value) {
+                                    $_SESSION['USER'] = array(
+                                        'ID_USER' => $value['id_user'],
+                                        'NAME' => $value['name'],
+                                        'SURNAME' => $value['surnames'],
+                                        'EMAIL' => $value['email'],
+                                        'PASSWORD' => $value['password'],
+                                        'TELEPHONE' => $value['telephone'],
+                                        'DATE_BIRTH' => $value['date_of_birth'],
+                                        'SEXO' => $value['sexo'],
+                                        'PROFILE' => $value['profile']
+                                    );
+                                }
+
+                                if ($_SESSION['USER']['PROFILE'] == 'Cliente') {
+                                    header('Location: '.URL_BASE);
+                                    $_SESSION['Success'] = 'exito';
+                                }else{
+                                    echo 'ADMIN';
+                                }
+                            }else{
+                                header('Location:'.URL_BASE.'User/Login');
+                                $_SESSION['Login'] = "Lo sentimos. Se encontro un error ";
+                            }
+
+                        endif;
               
-                     $email = $_POST['email'];
-                     $password = $_POST['password'];
-                     $password_encript = Encrip($password); */
-
-
                     break;
 
                 case 'registro':
-                    
-                  
 
+                    if (!isset($_POST['name'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['surnames'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['email'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['password'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['v_password'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['telephone'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['date'])):
+                        header('Location: '.URL_BASE);
+                    elseif(!isset($_POST['sexo'])):
+                        header('Location: '.URL_BASE);
+                    else:
+                        
+                        $name = $_POST['name'];
+                        $surnames = $_POST['surnames'];
+                        $email = $_POST['email'];
+                        $password = $_POST['password'];
+                        $password_encript = Encrip($password);
+                        $v_password = $_POST['v_password'];
+                        $telephone = $_POST['telephone'];
+                        $date = $_POST['date'];
+                        $sexo = $_POST['sexo'];
+                        
+                        if ($password == $v_password):
+                            $values = 'null,"'.$name.'","'.$surnames.'","'.$email.'","'.$password_encript.'",'.$telephone.',"'.$date.'","'.$sexo.'","Cliente",null';
+                            $id_user = $this->objUser->Register($values);
 
+                            if (!empty($id_user)) {
+                                $infoUser = $this->objUser->SelectUser($id_user);
 
+                                if (!empty($infoUser)) {
+
+                                    foreach ($infoUser as $value) {
+                                        $_SESSION['USER'] = array(
+                                            'ID_USER' => $value['id_user'],
+                                            'NAME' => $value['name'],
+                                            'SURNAME' => $value['surnames'],
+                                            'EMAIL' => $value['email'],
+                                            'PASSWORD' => $value['password'],
+                                            'TELEPHONE' => $value['telephone'],
+                                            'DATE_BIRTH' => $value['date_of_birth'],
+                                            'SEXO' => $value['sexo'],
+                                            'PROFILE' => $value['profile']
+                                        );
+                                    }
+
+                                    if ($_SESSION['USER']['PROFILE'] == 'Cliente') {
+                                        header('Location: '.URL_BASE);
+                                        $_SESSION['Success'] = 'exito';
+                                    }else{
+                                        echo 'ADMIN';
+                                    }
+                                    
+                                    
+                                }else{
+                                    header('Location:'.URL_BASE.'User/Login');
+                                    $_SESSION['Msg'] = "Lo sentimos. Se encontro un error ";
+                                }
+
+                            }else{
+
+                                header('Location:'.URL_BASE.'User/Login');
+                                $_SESSION['Msg'] = "Lo sentimos. Error al registrar usuario";
+                            };
+
+                        else:
+                            header('Location:'.URL_BASE.'User/Login');
+                            $_SESSION['Error'] = 'Error';
+                        endif;
+
+                    endif;
+
+                    break;
+
+                case 'exit':
+                        unset($_SESSION['USER']);
+                        header('Location: '.URL_BASE);
                     break;
                 
+                
                 default:
-                    header('Location:'.URL_BASE);
-                    break;
-            }
+                header('Location:'.URL_BASE);
+                break;
+
+                }
 
         endif;
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     
@@ -93,7 +191,8 @@ class UserController{
         $cantidad = $this->cartModal = $this->ModalCantidad();
         $totalProduct = $this->cartModal = $this->CartTotal();
 
-        $listOrder = $this->objUser->getListOrder(1);
+        $id_user = $_SESSION['USER']['ID_USER'];
+        $listOrder = $this->objUser->getListOrder($id_user);
 
        
         require_once('./views/User/my_order.php');
@@ -108,8 +207,8 @@ class UserController{
             $cantidad = $this->cartModal = $this->ModalCantidad();
             $totalProduct = $this->cartModal = $this->CartTotal();
             $id_sale = Descript($_GET['data']);
-
-            $listPorduct = $this->objUser->getProductSale(1,$id_sale);
+            $id_user = $_SESSION['USER']['ID_USER'];
+            $listPorduct = $this->objUser->getProductSale($id_user,$id_sale);
             
             require_once('./views/User/detail_sale.php');
 
@@ -123,13 +222,13 @@ class UserController{
     {
             if (isset($_GET['data'])):
 
-            
-
                 $dompdf = new Dompdf();
 
                 $id_sale = Descript($_GET['data']);
-                $listPorduct = $this->objUser->getProductSale(1,$id_sale);
-                $Address = $this->objUser->getAddress(1,$id_sale);
+                $id_user = $_SESSION['USER']['ID_USER'];
+
+                $listPorduct = $this->objUser->getProductSale($id_user,$id_sale);
+                $Address = $this->objUser->getAddress($id_user,$id_sale);
 
                 $thml = "";
 

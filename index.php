@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 
 //se llaman los archivos globales donde se podran utilizar en todo el proyecto
 require_once('./autoload.php');

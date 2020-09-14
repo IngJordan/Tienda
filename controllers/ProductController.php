@@ -26,18 +26,29 @@ class ProductController{
     {        
        if (isset($_GET['data'])) {
            $id = Descript($_GET['data']);
+           $_SESSION['ID_PRODUCT'] = $id;
            
            try {
             $this->menus = MainMenu();
-            $this->products = $this->ModelProduct->getProduct($id);
+            $this->products = $this->ModelProduct->getProduct($_SESSION['ID_PRODUCT'],2);
+            $this->cartModal = $this->ModalCart();
+            $cantidad = $this->cartModal = $this->ModalCantidad();
+            $totalProduct = $this->cartModal = $this->CartTotal();
+            require_once('views/Product/product.php');
+            unset($_SESSION['LIMIT']);
+           } catch (Exception $e) {
+            Index();
+           }
+       }else{
+            $_SESSION['LIMIT'] += 2;
+            $_SESSION['LIMIT'] += Descript($_GET['limit']);
+            $this->menus = MainMenu();
+            $this->products = $this->ModelProduct->getProduct($_SESSION['ID_PRODUCT'],$_SESSION['LIMIT']);
             $this->cartModal = $this->ModalCart();
             $cantidad = $this->cartModal = $this->ModalCantidad();
             $totalProduct = $this->cartModal = $this->CartTotal();
 
             require_once('views/Product/product.php');
-           } catch (Exception $e) {
-            Index();
-           }
        }
     }
 
@@ -68,7 +79,6 @@ class ProductController{
         }
 
     }
-
 
     //Modal Carrito
     function ModalCart()

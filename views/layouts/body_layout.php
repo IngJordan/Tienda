@@ -39,6 +39,8 @@
 
 <link rel="stylesheet" href="<?=Libreries?>DataTables/datatables.min.css">
 
+<link rel="stylesheet" href="<?=Libreries?>alertifyjs/css/alertify.css">
+
 </head>
 <body class="animsition">
 <!--Plugin de omentarios-->

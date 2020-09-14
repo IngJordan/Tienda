@@ -1,5 +1,5 @@
 <?php 
-session_start();
+//session_start();
 
 require_once('models/ProductModel.php');
 
@@ -10,44 +10,40 @@ class CartController{
     function AddCart()
     {
         if (isset($_POST['id']) && isset($_POST['sizes']) && isset($_POST['color']) && isset($_POST['num-product']) && is_numeric($_POST['num-product'])) {
-           
+
             $id = $_POST['id'];
+            $cantidad = $_POST['num-product'];
             $sizes = $_POST['sizes'];
             $color = $_POST['color'];
-            $cantidad = $_POST['num-product'];
 
-          
             $obj = new ProductModel();
             $product = $obj->getOneProduct1($id,$sizes,$color);
 
             if (!$product)
-                echo 'No existe el producto';
+                header("Location: ".URL_BASE.'product/DetailProduct&data='.Encrip($id));
 
             if (isset($_SESSION['carrito'])) {
                 
-               if (array_key_exists($id.','.$sizes.','.$color,$_SESSION['carrito'])) {
+            if (array_key_exists($id.','.$sizes.','.$color,$_SESSION['carrito'])) {
 
                 if (empty($cantidad) && !is_numeric($cantidad)) {
-                    header("Location:".URL_BASE."cart/DetailCart");
+                    header("Location: ".URL_BASE.'product/DetailProduct&data='.Encrip($id));
+
                 }else{
                     $this->Update($id,$sizes,$color,$cantidad);
                     header("Location:".URL_BASE."cart/DetailCart");
                 }
 
-               }else{
+            }else{
                 $this->Add($product,$id,$sizes,$color,$cantidad);
                 header("Location:".URL_BASE."cart/DetailCart");  
-               }
+            }
 
             }else{
                 $this->Add($product,$id,$sizes,$color,$cantidad);
                 header("Location:".URL_BASE."cart/DetailCart");
             }
-
-           /*  depurarArray($_SESSION['carrito']);
-            die; */
-        }      
-     
+        }     
     }
 
     function Add($resultado,$id,$sizes,$color,$cantidad = 1)
@@ -68,6 +64,8 @@ class CartController{
                     'SIZES' =>$item['tamaño'],
                     'COLOR' =>$item['color'],
                     'IMG' =>$item['route'],
+                    'COUNT_COLOR' =>$item['c_count'],
+                    'COUNT_SIZES' =>$item['s_count'],
                     'COUNT' => $cantidad
                 );
             }else{
@@ -86,6 +84,8 @@ class CartController{
                     'SIZES' =>$item['tamaño'],
                     'COLOR' =>$item['color'],
                     'IMG' =>$item['route'],
+                    'COUNT_COLOR' =>$item['c_count'],
+                    'COUNT_SIZES' =>$item['s_count'],
                     'COUNT' => $cantidad
                 );
 
@@ -100,23 +100,15 @@ class CartController{
 
     function Update($id,$sizes,$color,$cantidad = FALSE)
     {
-       if ($cantidad) {
-
-        if ($cantidad >= $_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT']) {
-
-            $_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT'] += $cantidad;
-        }else{
-
-            $_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT'] -= $cantidad;
-        }
-       }else {
+       if ($_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT'] < $_SESSION['carrito'][$id.','.$sizes.','.$color]['INVENTORIE']) {
          $_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT']+=1;
+       }else {
+         
        }
     }
 
     function Descriment()
     {
-      
         if ( !isset($_GET['id']) && !isset($_GET['sizes']) && !isset($_GET['color']) ) 
             header("Location:".URL_BASE);
 
@@ -137,21 +129,30 @@ class CartController{
     function Aument()
     {
       
-        if (!isset($_GET['id']) && !isset($_GET['sizes']) && !isset($_GET['color']) ) 
-            header("Location:".URL_BASE);
-
+        if (isset($_GET['id']) && isset($_GET['sizes']) && isset($_GET['color'])){
+    
             $id = $_GET['id'];
             $sizes = $_GET['sizes'];
             $color = $_GET['color'];
 
             if ($_SESSION['carrito']){
 
-                $_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT']+=1;
-                header("Location:".URL_BASE."cart/DetailCart");
+                if ($_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT'] < $_SESSION['carrito'][$id.','.$sizes.','.$color]['INVENTORIE']) {
+        
+                    $_SESSION['carrito'][$id.','.$sizes.','.$color]['COUNT']+=1;
+                    header("Location:".URL_BASE."cart/DetailCart");
+                   
+                }else{
+                    header("Location:".URL_BASE."cart/DetailCart");
+                }
 
             }else{
                 header("Location:".URL_BASE);
             }
+
+        }else{
+            header("Location:".URL_BASE);
+        }
     }
 
     function Total()

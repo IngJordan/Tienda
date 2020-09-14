@@ -3,6 +3,8 @@
 
 require_once('models/CategorieModel.php');
 require_once('models/ProductModel.php');
+require_once('models/GeneralsModel.php');
+
 
 //clase del controlador
 class IndexController{
@@ -16,12 +18,16 @@ class IndexController{
     var $cartModal = "";
     var $cartCount = "";
     var $objCart = "";
+    var $ofert = "";
+    var $objGenerals = "";
+    var $slider = "";
+    var $sold_product = "";
 
     public function __construct() {
        $this->objCategorie = new CategorieModel();
        $this->objProduct = new ProductModel();
        $this->objCart = new CartController();
-      
+       $this->objGenerals = new GeneralsModel();
     }
 
     public function index()
@@ -35,6 +41,11 @@ class IndexController{
         $this->categories = $this->AllCategoriees();
         //funcion productos
         $this->products = $this->AllProducts();
+        $this->ofert = $this->Ofert();
+
+        $this->slider = $this->slider();
+
+        /* $this->sold_product = $this->sold_product(); */
 
         //renderiza la vista
         require_once 'views/home.php';   
@@ -118,6 +129,18 @@ class IndexController{
         return $products;
     }
 
+    function Ofert()
+    {
+        $Ofert = $this->objProduct->Ofert();
+        return $Ofert;
+    }
+
+/*     function sold_product()
+    {
+        $sold_product= $this->objProduct->sold_product();
+        return $sold_product;
+    } */
+
     function ModalCart()
     {
         $cart = $this->objCart->AddCart();
@@ -136,5 +159,10 @@ class IndexController{
         return $cantidad;
     }
 
+    function slider()
+    {
+        $slider  = $this->objGenerals->getSlider();
+        return $slider;
+    }
 
 }

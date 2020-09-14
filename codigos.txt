@@ -425,5 +425,15 @@ $total = $envio + $subtotal;
 echo $total;
 
 
+LOS PRODUCTOS MAS VENDIDOS
+SELECT `PRODUCTS-SOLD`.`id_sold`, SUM(`PRODUCTS-SOLD`.`count`) AS TotalVentas
+FROM `PRODUCTS-SOLD` INNER JOIN PRODUCTS ON
+PRODUCTS.id_product = `PRODUCTS-SOLD`.`fk_id_product`
+
+GROUP BY `PRODUCTS-SOLD`.`id_sold`
+ORDER BY SUM(`PRODUCTS-SOLD`.`count`) DESC
+LIMIT 0 , 30
+
+
 
          

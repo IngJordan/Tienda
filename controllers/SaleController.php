@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -8,9 +9,8 @@ require_once('./helpers/helpers.php');
 require('./vendor/autoload.php');
 
 require_once('./models/SuccessModel.php');
+require_once('./models/ProductModel.php');
 
-
-//ViewError();
 
 //vendedor
 //id 638025510
@@ -35,12 +35,14 @@ class SaleController
     var $menus = "";
     var $objCart = "";
     var $objSuccess = "";
-    
+    var $objProducts = "";
+
 
     public function __construct()
     {
        $this->objCart = new CartController();
        $this->objSuccess = new SucessModel();
+       $this->objProducts = new ProductModel();
     }
 
     function Formulario()
@@ -142,17 +144,13 @@ class SaleController
 
             // Agrega credenciales //vendedor
             MercadoPago\SDK::setAccessToken('TEST-6674804345396962-090319-656db01b6de286e8bd3251f0525af531-638025510');
+
+          
+
             // Crea un objeto de preferencia
             $preference = new MercadoPago\Preference();
 
-            $preference->back_urls = array(
-                "success" => URL_BASE."Sale/Success",
-                "failure" => URL_BASE."Sale/failure",
-                "pending" => URL_BASE."Sale/pending"
-            );
-
-            $preference->auto_return = "approved";
-
+        
             $datos = array();
 
             foreach ($_SESSION['carrito'] as $value):
@@ -167,15 +165,45 @@ class SaleController
             endforeach;
 
             $shipments = new MercadoPago\Shipments();
-        
-            $shipments->cost = (int) $_SESSION['total-product']['envio'];
+            $shipments->cost = (int) $_SESSION['total-product']['envio'];     
             
+            $preference->payment_methods = array(
+                "excluded_payment_methods" => array(
+                
+                ),
+                "excluded_payment_types" => array(
+                  array("id" => "ticket"),
+                  array("id" => "digital_wallet"),
+                  array("id" => "digital_currency"),
+                  array("id" => "atm"),
+
+                ),
+
+                "installments" => 1,
+              );
+            
+            $preference->binary_mode = true;
             $preference->items = $datos;
             $preference->shipments = $shipments;
-        
-            $preference->save();
 
+          
+            $preference->back_urls = array(
+                "success" => URL_BASE."Sale/Success",
+                "failure" => URL_BASE."Sale/failure",
+                "pending" => URL_BASE."Sale/pending"
+            );
+
+            $preference->auto_return = "approved";
+
+            $bol = $this->verif();
+            if ($bol == true) {
+            }else{
+                $preference->save();
+            }
+            
             require_once('./views/Order/payment.php');
+
+            
         else:
             header('Location: '.URL_BASE);
         endif;
@@ -197,8 +225,10 @@ class SaleController
             //campturamos el total de la venta con el envio
             $total = $envio + $subtotal;
 
+            $id_user = $_SESSION['USER']['ID_USER'];
+
             //recuperamos el ultimo id registrado en sales
-            $id_sale = $this->objSuccess->Sale("null,$total,null,1");
+            $id_sale = $this->objSuccess->Sale("null,$total,null,$id_user");
 
             if (!empty($id_sale)):
                 //insert tabla sends
@@ -296,7 +326,7 @@ class SaleController
 
             //Recipients
             $mail->setFrom('jordanmeza438@gmail.com', 'Tienda Online');
-            $mail->addAddress('jordanmeza438@gmail.com', '');     // Add a recipient
+            $mail->addAddress($_SESSION['USER']['EMAIL'], $_SESSION['USER']['NAME'] );     // Add a recipient
 
             // Content
             $mail->isHTML(true);                                  // Set email format to HTML
@@ -352,6 +382,20 @@ class SaleController
         }
 
         
+    }
+
+    function verif()
+    {
+        $dato = false;
+        $array = $this->objProducts->verific($_SESSION['carrito']);
+
+        if (empty($array)) {
+            $dato = true;
+        }else{
+            $dato = false;
+        }
+
+        return $dato;
     }
 
     //Modal Carrito

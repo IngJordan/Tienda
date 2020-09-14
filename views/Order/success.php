@@ -6,6 +6,7 @@
 <section class="bg-title-page flex-col-c-m">
     <h2 class="l-text2 t-center">
         <span class="text-black">Gracias por la compra</span>
+        Ver <a href="<?=URL_BASE?>User/Myorder">Mi pedido</a>
     </h2>
 </section>
 

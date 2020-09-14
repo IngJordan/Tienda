@@ -126,17 +126,35 @@
 
 	                    <!-- Header user -->
 	                    <div class="header-cart header-dropdown">
-	                        <ul class="header-cart-wrapitem">
-								<li class="header-cart-item">
-								<a href="<?=URL_BASE?>User/Login">Login</a>
-								</li>
-								<li>
-								<a href="">Mi cuenta</a>
-								</li>
-								<li>
-								<a href="<?=URL_BASE?>User/Myorder">Mis pedidos</a>
-								</li>
-	                        </ul>	                       
+							<?php
+							
+							if (isset($_SESSION['USER'])) {
+								if ($_SESSION['USER']['PROFILE'] == 'Cliente') {
+									?>
+									<ul class="header-cart-wrapitem">
+										<li>
+										<a href="">Mi cuenta</a>
+										</li>
+										<li>
+										<a href="<?=URL_BASE?>User/Myorder">Mis pedidos</a>
+										</li>
+										<li>
+										<a href="<?=URL_BASE?>User/UserCheck&data=<?=Encrip('exit')?>">Cerrar Session</a>
+										</li>
+									</ul>
+									<?php
+								}
+							}else{
+								?>
+								<ul class="header-cart-wrapitem">
+									<li class="header-cart-item">
+										<a href="<?=URL_BASE?>User/Login">Login / Registro</a>
+									</li>
+								</ul>
+								<?php
+							}
+							
+							?>	                       
 						</div>
 	                </div>
 	            </div>
@@ -266,11 +284,13 @@
 	                    </div>
 	                </li>
 	                <li class="item-menu-mobile">
-	                    <a href="<?=URL_BASE?>">Inicio</a>
+						<a href="<?=URL_BASE?>">Inicio
+					</a>
 	                </li>
 	            </ul>
 	        </nav>
-	    </div>
+		</div>
+		
 	</header>
 
 

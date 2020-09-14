@@ -39,6 +39,24 @@ class UserModel extends crudMysql{
         return $request;
     }
 
+    function Register($values)
+    {
+        $request = $this->insert("`USERS`",$values);
+        return $request;
+    }
+
+    function SelectUser($id_user)
+    {
+        $request = $this->selectOne("USERS"," id_user = $id_user");
+        return $request;
+    }
+
+    function Check($email,$password)
+    {
+        $request = $this->selectOne("USERS"," email = '$email' AND password = '$password' ");
+        return $request;
+    }
+
 }
 
 

@@ -18,13 +18,13 @@
                     <div class="form-group col-md-6">
                         <label>Nombre y Apellido</label>
                         <div class="bo4 of-hidden">
-                            <input type="text" class="form-control" name="nombre" required>
+                            <input type="text" class="form-control" name="nombre" value="<?= $_SESSION['USER']['NAME']?>" required>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Correo Electronico</label>
                         <div class="bo4 of-hidden">
-                            <input type="email" class="form-control" name="email" required>
+                            <input type="email" class="form-control" name="email" value="<?= $_SESSION['USER']['EMAIL']?>" required>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -113,7 +113,7 @@
                         <label>Telefono de contacto</label>
                         <div class="bo4 of-hidden">
                             <input type="number" class="form-control" placeholder="Incluye la lada de tu pais"
-                                name="telefono" required>
+                                name="telefono" value="<?= $_SESSION['USER']['TELEPHONE']?>" required>
                         </div>
                     </div>
                     <div class="form-group col-md-12">

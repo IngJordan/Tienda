@@ -35,7 +35,7 @@
 												</a>
 											</td>
 											<td class="column-2"><?=$value['NAME']?></td>
-											<td class="column-2 text-capitalize"><?=$value['SIZES']." ".$value['COLOR']?></td>
+											<td class="column-2 text-capitalize"><?=$value['COLOR']?>,<?=$value['SIZES']?></td>
 											<td class="column-4"><?=formatMoney($value['PRICE'])?></td>
 											<td class="column-4">
 												<div class="">
@@ -157,19 +157,26 @@
 					<div class="size15 trans-0-4">
 						<!-- Button -->
 						<?php
-							if (isset($_SESSION['carrito'])):
-								?>
-								<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-									Siguiente
-								</button>
-								<?php
+							if (isset($_SESSION['USER'])):
+								if (isset($_SESSION['carrito'])):
+									?>
+									<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+										Siguiente
+									</button>
+									<?php
+								else:
+									?>
+									<button class="flex-c-m sizefull bg1 bo-rad-23  s-text1 trans-0-4" disabled>
+										Siguiente
+									</button>
+									<?php
+								endif;
+
 							else:
 								?>
-								<button class="flex-c-m sizefull bg1 bo-rad-23  s-text1 trans-0-4" disabled>
-									Siguiente
-								</button>
+									<a href="<?=URL_BASE?>/User/Login">Iniciar sesion</a>
 								<?php
-							endif
+							endif;
 						?>
 					</div>
 				</div>

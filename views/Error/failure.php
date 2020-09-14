@@ -9,7 +9,7 @@
                 <h1>ERROR</h1>
             </div>
             <div class=" card-body">
-                <h5>Lo sentimos... Al  paracer tienes un error con tu tarjeta. por favor vuelve a intenarlo</h5>
+                <h5>Lo sentimos... Al  paracer tienes un error con tu tarjeta o ya no esta el producto seleccionado. por favor vuelve a intenarlo</h5>
             </div>
         </div>
    </section>

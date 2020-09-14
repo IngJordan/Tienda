@@ -62,7 +62,7 @@ class crudMysql extends conexion{
     public function selectOne(string $table,string $condicion){
         $this->table = $table;
         $this->condicion = $condicion;
-        $consul="SELECT * FROM ".$this->$table." WHERE ".$condicion;
+        $consul="SELECT * FROM ".$this->table." WHERE ".$this->condicion;
         $selectOne = $this->conexion->prepare($consul);
         $selectOne->execute();
         $result = $selectOne->fetchAll(PDO::FETCH_ASSOC);

@@ -232,6 +232,10 @@
 <!--Funcion para agregar productos al carrito-->
 <script src="<?=Assets?>ajax/addCart.js"></script>
 
+<script src="<?=Libreries?>alertifyjs/alertify.js"></script>
+
+
+
 <!--Plugin de messenger y washap-->
 <script type="text/javascript">
     (function () {

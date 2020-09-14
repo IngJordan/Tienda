@@ -30,13 +30,13 @@
                 <div class="form-group col-md-12">
                     <label for="">Correo Electronico</label>
                     <div class="bo4 of-hidden">
-                        <input type="text" name="email" class="form-control">
+                        <input type="text" name="email" class="form-control" required >
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Contraseña</label>
                     <div class="bo4 of-hidden">
-                        <input type="password" name="password" class="form-control">
+                        <input type="password" name="password" class="form-control" required>
                     </div>
                 </div>
 
@@ -50,54 +50,51 @@
                 <div class="form-group col-md-12">
                     <label for="">Nombre </label>
                     <div class="bo4 of-hidden">
-                        <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <input type="text" name="name" class="form-control"  required >
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Apellidos</label>
                     <div class="bo4 of-hidden">
-                        <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <input type="text" name="surnames" class="form-control" required >
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Correo Electronico</label>
                     <div class="bo4 of-hidden">
-                        <input type="email" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <input type="email" name="email" class="form-control"  required>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Contraseña</label>
                     <div class="bo4 of-hidden">
-                        <input type="password" name="" id="" class="form-control" placeholder=""
-                            aria-describedby="helpId">
+                        <input type="password" name="password" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Confirmar Contraseña</label>
                     <div class="bo4 of-hidden">
-                        <input type="password" name="" id="" class="form-control" placeholder=""
-                            aria-describedby="helpId">
+                        <input type="password" name="v_password" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Telefono</label>
                     <div class="bo4 of-hidden">
-                        <input type="number" name="" id="" class="form-control" placeholder=""
-                            aria-describedby="helpId">
+                        <input type="number" name="telephone" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Fecha de nacimiento</label>
                     <div class="bo4 of-hidden">
-                        <input type="date" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <input type="date" name="date" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="">Sexo</label>
                     <div class="bo4 of-hidden">
-                        <select class="form-control">
-                            <option value="">Hombre</option>
-                            <option value="">Mujer</option>
+                        <select class="form-control" name="sexo" required>
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
                         </select>
                     </div>
                 </div>
@@ -116,6 +113,31 @@
 
 
 <?php require_once('./views/layouts/footer_layout.php');?>
+
+
+<?php
+    if (isset($_SESSION['Error']) == 'Error' ) { ?>
+        <script type="text/javascript">
+            alertify.error("Contraseñas No Coninciden");
+        </script>
+        <?php }else if(isset($_SESSION['Msg'])){
+        ?>
+            <script type="text/javascript">
+                alertify.error('Error');
+            </script>
+        <?php
+    }else if(isset($_SESSION['Login'])){
+        ?>
+            <script type="text/javascript">
+                alertify.error('Datos Incorrectos');
+            </script>
+        <?php
+    };
+
+    unset($_SESSION['Error']);
+    unset($_SESSION['Msg']);
+    unset($_SESSION['Login']);
+?>
 
 <script>
 $(function() {
