@@ -132,6 +132,7 @@
 								if ($_SESSION['USER']['PROFILE'] == 'Cliente') {
 									?>
 									<ul class="header-cart-wrapitem">
+										<li><a><?='Hola '.$_SESSION['USER']['NAME'];?></a></li>
 										<li>
 										<a href="">Mi cuenta</a>
 										</li>

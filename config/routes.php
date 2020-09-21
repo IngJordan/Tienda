@@ -16,6 +16,8 @@ const Assets = URL_BASE."assets/";
 //ruta de libreries
 const Libreries = URL_BASE."libreries/";
 
+const LibAdmin = URL_BASE."assets/admin/";
+
 //base de datos jordan
 const DB_HOST = "localhost";
 const DB_NAME = "TiendaMvc";

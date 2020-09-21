@@ -58,6 +58,7 @@ class UserController{
                             $infoUser = $this->objUser->Check($email,$password_encript);
 
                             if (!empty($infoUser)) {
+
                                 foreach ($infoUser as $value) {
                                     $_SESSION['USER'] = array(
                                         'ID_USER' => $value['id_user'],
@@ -73,11 +74,14 @@ class UserController{
                                 }
 
                                 if ($_SESSION['USER']['PROFILE'] == 'Cliente') {
+                                   
                                     header('Location: '.URL_BASE);
                                     $_SESSION['Success'] = 'exito';
+
                                 }else{
-                                    echo 'ADMIN';
+                                    header('Location: '.URL_BASE.'Admin/index');
                                 }
+
                             }else{
                                 header('Location:'.URL_BASE.'User/Login');
                                 $_SESSION['Login'] = "Lo sentimos. Se encontro un error ";
